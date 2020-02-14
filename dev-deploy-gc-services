@@ -1,0 +1,5 @@
+#!/bin/bash
+docker stop gc-services-name
+docker rm gc-services-name
+docker build -t gc-services .
+docker run -it --rm --name gc-services-name -p 13579:8080 gc-services ls -a ./build

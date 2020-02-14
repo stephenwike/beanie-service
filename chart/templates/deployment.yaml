@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "app.labels" . | nindent 6 }}
+  template:
+    metadata:
+      name: {{ .Values.name }}
+      labels:
+        {{- include "app.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: beanie-container
+        imagePullPolicy: Always
+        image: stephenwike/fss-games-beanie-service:latest
+        ports:
+        - containerPort: 80

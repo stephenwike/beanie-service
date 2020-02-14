@@ -1,0 +1,10 @@
+#!/bin/bash
+rm -rf ./projects
+
+mkdir projects
+cd projects
+
+git clone https://github.com/stephenwike/GameCentralCore.git
+mv GameCentralCore core
+
+cd ../
