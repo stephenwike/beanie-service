@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beanie-kiosk
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "app.labels" . | nindent 6 }}
+  template:
+    metadata:
+      name: beanie-kiosk
+      labels:
+        {{- include "app.labels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: beanie-kiosk
+        imagePullPolicy: Always
+        image: stephenwike/beanie-kiosk:latest
+        ports:
+        - containerPort: 80
