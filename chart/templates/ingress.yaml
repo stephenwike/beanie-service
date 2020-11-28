@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: beanie-ingress
@@ -7,20 +7,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: "www.fireshellstudio.com"
+  - host: "beanie.fireshellstudio.com"
     http:
       paths:
       - path: "/"
-        pathType: Prefix
         backend:
-          service:
-            name: beanie-kiosk-service
-            port:
-              number: 80
-      - path: "/beanie"
-        pathType: Prefix
-        backend:
-          service:
-            name: beanie-kiosk-service
-            port:
-              number: 80
+          serviceName: beanie-kiosk-service
+          servicePort: 80
