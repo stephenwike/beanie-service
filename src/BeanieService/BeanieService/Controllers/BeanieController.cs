@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BeanieService.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,23 +9,33 @@ namespace BeanieService.Controllers
     public class BeanieController : ControllerBase
     {
         private readonly ILogger<BeanieController> _logger;
+        private Persistence _persistence;
 
         public BeanieController(ILogger<BeanieController> logger)
         {
             _logger = logger;
+            _persistence = new Persistence();
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult GetScoreBoard()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            var scores = _persistence.GetScoreBoard();
+            return Ok(scores);
+        }
+
+        [HttpPost("start")]
+        public IActionResult CreateNewGame([FromBody]string[] players)
+        {
+            _persistence.AddGame(players);
+            return Ok();
+        }
+
+        [HttpPut("score/{round}")]
+        public IActionResult IActionResult(int round, [FromBody]PlayerScoreModel[] playerScores)
+        {
+            _persistence.SetRoundScores(round, playerScores);
+            return Ok();
         }
     }
 }

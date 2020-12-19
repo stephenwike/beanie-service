@@ -11,7 +11,7 @@ export class BeanieService {
 
   constructor(private http: HttpClient) { }
 
-  StartGame() {
+  StartGame(players: string[]) {
     // TODO:  This will send a message to the backend signifying a new game begins
     //this.http.post(this.baseUri + "/start");
   }
