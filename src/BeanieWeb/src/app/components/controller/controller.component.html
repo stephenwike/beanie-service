@@ -1,0 +1,14 @@
+<div class="round-header">
+    <h2>Round {{ currentRound + 1}}</h2>
+    <h3>{{ roundWilds[currentRound] }} are wild</h3>   
+    <button mat-button (click)="Previous()" [disabled]="currentRound === 0">Previous</button>
+    <button mat-button (click)="Next()" [disabled]="currentRound === roundsPlayed">Next</button> 
+</div>
+
+<form class="score-form" fxLayout="column" fxLayoutAlign="space-around center">
+    <div *ngFor="let player of playerArray" fxLayout="row" fxLayoutAlign="space-around center">
+        <label>{{ player }}</label>
+        <input class="player-score" matInput type="number" min="0" />
+    </div>
+    <button mat-button (click)="setScores()">Enter</button>
+</form>

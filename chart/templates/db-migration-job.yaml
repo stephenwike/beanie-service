@@ -1,0 +1,44 @@
+{{ if .Values.persistence.migrate }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: beanie-dbmigration
+  labels:
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "5"
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: database-migration
+        imagePullPolicy: Always
+        image: stephenwike/beanie-migration:latest
+        args: ["--action=MigrateDb", "--type=$(DATABASE_TYPE)", "--server=$(DATABASE_HOST)", "--port=$(DATABASE_PORT)", "--database=$(DATABASE_NAME)", "--username=$(DATABASE_USER)", "--password=$(DATABASE_PASSWORD)", "--sslmode=$(DATABASE_SSL)"]
+        env:
+          - name: DATABASE_TYPE
+            value: {{ .Values.persistence.type | quote}}
+          - name: DATABASE_HOST
+            value: {{ .Values.persistence.host | quote }}
+          - name: DATABASE_PORT
+            value: {{ .Values.persistence.port | quote }}
+          - name: DATABASE_NAME
+            value: {{ .Values.persistence.name | quote }}
+          - name: DATABASE_USER
+            value: {{ .Values.persistence.user | quote }}
+          - name: DATABASE_PASSWORD
+            value: {{ .Values.persistence.password | quote }}
+          - name: DATABASE_SSL
+            value: {{ .Values.persistence.sslmode | quote }}
+{{- end }}
