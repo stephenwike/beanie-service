@@ -1,4 +1,4 @@
 export class PlayerScore {
-    Name: string;
-    Score: number;
+    name: string;
+    scores: number;
 }

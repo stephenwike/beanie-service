@@ -43,6 +43,7 @@ export class BeanieControllerComponent implements OnInit {
   }
 
   StartGame(): void {
-    this.beanieService.StartGame(this.players);
+    this.beanieService.StartGame(this.players.getRawValue());
+    console.log("AFTER!!!!!")
   }
 }

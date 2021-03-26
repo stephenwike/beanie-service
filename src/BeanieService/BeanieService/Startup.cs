@@ -18,6 +18,16 @@ namespace BeanieService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    configurePolicy: builder =>
+                    {
+                        builder.WithOrigins("localhost:4200", "127.0.0.1:5001", "http://localhost:4200", "http://127.0.0.1:5001", "localhost:5001/beanie", "localhost:5001/beanie/start")
+                            .WithMethods("GET", "POST", "PUT");
+                    });
+            });
+
             services.AddControllers();
         }
 
@@ -33,7 +43,9 @@ namespace BeanieService
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors();
+
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

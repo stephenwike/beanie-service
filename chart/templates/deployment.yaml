@@ -18,6 +18,6 @@ spec:
       containers:
       - name: beanie-container
         imagePullPolicy: Always
-        image: stephenwike/fss-games-beanie-service:latest
+        image: stephenwike/beanie-service:latest
         ports:
         - containerPort: 80

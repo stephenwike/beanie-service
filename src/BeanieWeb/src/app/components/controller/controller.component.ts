@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PlayerScore } from 'src/app/models/player-score.model';
 import { BeanieService } from 'src/app/services/beanie-service';
-import { Player } from 'src/models/player.model';
 
 @Component({
   selector: 'app-controller',
@@ -29,17 +28,17 @@ export class ControllerComponent implements OnInit {
     this.roundForm = this.fb.group({
       players: this.fb.array([])
     })
-    let frame: PlayerScore[] = [];
-    this.playerArray.forEach(player => {
-      frame.push({ Name: player, Score: 0})
-    });
-    this.scores = new Array(13).fill(frame);
-    console.log(this.scores);
+    // let frame: PlayerScore[] = [];
+    // this.playerArray.forEach(player => {
+    //   frame.push({ Name: player, Score: 0})
+    // });
+    // this.scores = new Array(13).fill(frame);
+    // console.log(this.scores);
   }
 
   setScores(): void {
     // Send scores for the current round.
-    this.beanieService.SendRoundScores(this.scores[this.currentRound]);
+    //this.beanieService.SendRoundScores(this.scores[this.currentRound]);
 
     // If the current round is index 12, there are no more rounds
     if (this.currentRound === 12)

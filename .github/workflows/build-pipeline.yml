@@ -1,0 +1,13 @@
+name: CI/CD
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Build WebApi
+        run: ./ci/build-webapi.ps1
+        shell: pwsh

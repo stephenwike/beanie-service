@@ -5,23 +5,31 @@ namespace BeanieService
 {
     internal class MockGameBoardDatabase
     {
-        private string[] _players;
-        private PlayerScoreModel[][] _scoreboard;
+        private ScoreBoard _scoreboard;
 
         internal void SetPlayers(string[] players)
         {
-            _players = players;
-            _scoreboard = new PlayerScoreModel[13].Select(x => {
-                return _players.Select(player => new PlayerScoreModel() { Name = player }).ToArray();
-            }).ToArray();
+            _scoreboard = new ScoreBoard()
+            {
+                Players = players.Select(x =>
+                {
+                    return new Player()
+                    {
+                        Name = x
+                    };
+                }).ToList()
+            };
         }
 
-        internal void SetRoundScores(int round, PlayerScoreModel[] playerScores)
+        internal void SetRoundScores(int round, PlayerScore[] playerScores)
         {
-            _scoreboard[round] = playerScores;
+            playerScores.ToList().ForEach(player =>
+            {
+                _scoreboard.Players.Where(x => x.Name == player.Name).First().Scores[round] = player.Score;
+            });
         }
 
-        internal PlayerScoreModel[][] GetScoreBoard()
+        internal ScoreBoard GetScoreBoard()
         {
             return _scoreboard;
         }

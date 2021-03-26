@@ -1,8 +1,8 @@
 ﻿namespace BeanieService.Model
 {
-    public class PlayerScoreModel
+    public class PlayerScore
     {
         public string Name { get; set; }
         public int Score { get; set; }
     }
-}
+}   
