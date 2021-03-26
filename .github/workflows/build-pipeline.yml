@@ -5,9 +5,18 @@ on: push
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      VERSION: 0.0.1
+      BUILD_CONFIGURATION: Release
+      DOCKER_REPO: stephenwike
+      SERVICE_DOCKER_IMAGE: beanie-service
+      POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Build WebApi
         run: ./ci/build-webapi.ps1
+        shell: pwsh
+      - name: Publich WebApi
+        run: ./ci/publish-webapi.ps1
         shell: pwsh
