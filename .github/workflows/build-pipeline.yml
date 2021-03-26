@@ -11,6 +11,7 @@ jobs:
       DOCKER_REPO: stephenwike
       SERVICE_DOCKER_IMAGE: beanie-service
       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+      DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
