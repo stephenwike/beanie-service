@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Values.ui }}
   labels:
-    {{- include "app.labels" . | nindent 4 }}
+    component: {{ .Values.ui }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "app.labels" . | nindent 6 }}
+      component: {{ .Values.ui }}
   template:
     metadata:
-      name: {{ .Values.name }}
+      name: beanie-ui
       labels:
-        {{- include "app.labels" . | nindent 8 }}
+        component: {{ .Values.ui }}
     spec:
       imagePullSecrets:
       - name: docker-registry-secret
       containers:
-      - name: beanie-container
+      - name: {{ .Values.ui }}
         imagePullPolicy: Always
-        image: stephenwike/beanie-service:latest
+        image: stephenwike/beanie-kiosk:latest
         ports:
         - containerPort: 80

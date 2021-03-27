@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["BeanieService/BeanieService.csproj", "BeanieService/"]
-RUN dotnet restore "BeanieService/BeanieService.csproj"
+COPY ["beanie-service/beanie-service.csproj", "beanie-service/"]
+RUN dotnet restore "beanie-service/beanie-service.csproj"
 COPY . .
-WORKDIR "/src/BeanieService"
-RUN dotnet build "BeanieService.csproj" -c Release -o /app/build
+WORKDIR "/src/beanie-service"
+RUN dotnet build "beanie-service.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "BeanieService.csproj" -c Release -o /app/publish
+RUN dotnet publish "beanie-service.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BeanieService.dll"]
+ENTRYPOINT ["dotnet", "beanie-service.dll"]
