@@ -1,0 +1,14 @@
+<div class="container">
+    <h2 class="header"><mat-label>Players</mat-label></h2>
+
+    <form>
+        <div class="players-form-array" fxLayout="column" fxLayoutAlign="start start" *ngFor="let player of players">
+            <mat-form-field appearance="standard">
+                <input matInput value="{{player}}" placeholder="Enter a player name..."/>
+            </mat-form-field>
+        </div>
+        
+    </form>
+    <button mat-button (click)="AddPlayer()">Add Player</button>
+    <button mat-button (click)="StartGame()">Start Game</button>
+</div>

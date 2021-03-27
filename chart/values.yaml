@@ -1,7 +1,7 @@
 persistence:
   create: true
   migrate: true
-  name: beanie
+  database: beanie
   type: PostgreSQL
   host: data.fireshellstudio.com
   user: admin

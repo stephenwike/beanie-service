@@ -15,6 +15,9 @@ import { BeanieControllerComponent } from './beanie-controller/beanie-controller
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ControllerComponent } from './components/controller/controller.component';
+import { NewOrExistingPromptComponent } from './components/new-or-existing-prompt/new-or-existing-prompt.component';
+import { CreateGameComponent } from './components/create-game/create-game.component';
+import { FindGameComponent } from './components/find-game/find-game.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { ControllerComponent } from './components/controller/controller.componen
     BeanieComponent,
     BeanieKioskComponent,
     BeanieControllerComponent,
-    ControllerComponent
+    ControllerComponent,
+    NewOrExistingPromptComponent,
+    CreateGameComponent,
+    FindGameComponent
   ],
   imports: [
     BrowserModule,

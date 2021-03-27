@@ -1,0 +1,17 @@
+.mat-form-field-flex {
+    padding: 0;
+}
+
+.header {
+    padding: 25px 0 0 0;
+}
+
+.container {
+    margin: auto;
+    border: 1px solid black;
+    max-width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
