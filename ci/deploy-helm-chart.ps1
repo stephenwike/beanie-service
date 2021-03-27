@@ -1,3 +1,6 @@
 #!/usr/bin/env pwsh
 
-Write-Host $env:POSTGRES_PASSWORD
+helm uninstall $env:HELM_CHART_NAME
+
+helm install $env:HELM_CHART_NAME ./chart/ `
+    --set persistence.password=$env:POSTGRES_PASSWORD

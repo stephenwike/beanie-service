@@ -3,10 +3,10 @@ persistence:
   migrate: true
   name: beanie
   type: PostgreSQL
-  host: fireshellstudio.us
-  user: postgres
+  host: data.fireshellstudio.com
+  user: admin
   password: pass
   port: 5432
   sslmode: disable
-
+  
 name: beanie-service
