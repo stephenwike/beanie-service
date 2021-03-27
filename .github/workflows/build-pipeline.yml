@@ -13,6 +13,11 @@ jobs:
       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       HELM_CHART_NAME: beanie
+      KUBERNETES_CLUSTER_NAME: scw-k8s
+      KUBERNETES_SERVER: ${{secrets.KUBERNETES_SERVER}}
+      KUBERNETES_CERTIFICATE: ${{secrets.KUBERNETES_CERTIFICATE}}
+      KUBERNETES_CLIENT_CERTIFICATE: ${{secrets.KUBERNETES_CLIENT_CERTIFICATE}}
+      KUBERNETES_CLIENT_KEY: ${{secrets.KUBERNETES_CLIENT_KEY}}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
