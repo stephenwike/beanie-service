@@ -24,10 +24,10 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts: 
-        - name: {{ .Values.secret }}
+        - name: secret-volume
           mountPath: /secrets
           readOnly: true
       volumes:
-      - name: {{ .Values.secret }}
+      - name: secret-volume
         secret: 
           secretName: {{ .Values.secret }}

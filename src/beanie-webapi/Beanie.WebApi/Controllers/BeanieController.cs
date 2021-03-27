@@ -2,6 +2,7 @@
 using Beanie.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace Beanie.WebApi.Controllers
 {
@@ -35,8 +36,15 @@ namespace Beanie.WebApi.Controllers
         [HttpGet("players")]
         public IActionResult GetPlayers()
         {
-            var players = _service.GetPlayers();
-            return Ok(players);
+            try
+            {
+                var players = _service.GetPlayers();
+                return Ok(players);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         //[HttpPut("score/{round}")]
