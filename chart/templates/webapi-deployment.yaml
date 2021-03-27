@@ -20,6 +20,6 @@ spec:
       containers:
       - name: {{ .Values.webapi }}
         imagePullPolicy: Always
-        image: stephenwike/beanie-service:latest
+        image: stephenwike/{{ .Values.webapi }}:latest
         ports:
         - containerPort: 80

@@ -9,7 +9,8 @@ jobs:
       VERSION: 0.0.1
       BUILD_CONFIGURATION: Release
       DOCKER_REPO: stephenwike
-      SERVICE_DOCKER_IMAGE: beanie-service
+      WEBAPI_DOCKER_IMAGE: beanie-webapi
+      UI_DOCKER_IMAGE: beanie-ui
       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       HELM_CHART_NAME: beanie

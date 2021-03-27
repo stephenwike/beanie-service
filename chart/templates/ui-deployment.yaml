@@ -20,6 +20,6 @@ spec:
       containers:
       - name: {{ .Values.ui }}
         imagePullPolicy: Always
-        image: stephenwike/beanie-kiosk:latest
+        image: stephenwike/{{ .Values.ui }}:latest
         ports:
         - containerPort: 80

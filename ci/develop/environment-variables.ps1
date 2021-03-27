@@ -21,6 +21,7 @@ function Set-BuildEnvironmentVariable
 Set-BuildEnvironmentVariable VERSION "0.0.1"
 Set-BuildEnvironmentVariable BUILD_CONFIGURATION "Release"
 Set-BuildEnvironmentVariable DOCKER_REPO "stephenwike"
-Set-BuildEnvironmentVariable SERVICE_DOCKER_IMAGE "beanie-service"
+Set-BuildEnvironmentVariable WEBAPI_DOCKER_IMAGE "beanie-webapi"
+Set-BuildEnvironmentVariable UI_DOCKER_IMAGE "beanie-ui"
 Set-BuildEnvironmentVariable HELM_CHART_NAME "beanie"
 
