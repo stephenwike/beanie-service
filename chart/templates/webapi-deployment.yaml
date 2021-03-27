@@ -23,3 +23,11 @@ spec:
         image: stephenwike/{{ .Values.webapi }}:latest
         ports:
         - containerPort: 80
+        volumeMounts: 
+        - name: {{ .Values.secret }}
+          mountPath: /secrets
+          readOnly: true
+      volumes:
+      - name: {{ .Values.secret }}
+        secret: 
+          secretName: {{ .Values.secret }}

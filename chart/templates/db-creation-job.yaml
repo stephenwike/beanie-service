@@ -34,7 +34,7 @@ spec:
           - name: DATABASE_PORT
             value: {{ .Values.persistence.port | quote }}
           - name: DATABASE_NAME
-            value: {{ .Values.persistence.name | quote }}
+            value: {{ .Values.persistence.database | quote }}
           - name: DATABASE_USER
             value: {{ .Values.persistence.user | quote }}
           - name: DATABASE_PASSWORD

@@ -13,3 +13,4 @@ name: beanie-service
 webapi: beanie-webapi
 ui: beanie-ui
 ingress: beanie-ingress
+secret: beanie-service-secrets
