@@ -1,5 +1,7 @@
 ﻿using Beanie.WebApi.Entities;
+using Beanie.WebApi.Models;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using System;
@@ -8,27 +10,33 @@ using System.Linq;
 
 namespace Beanie.WebApi.Services
 {
-    public class BeanieService
+    public class BeanieService : IBeanieService
     {
-        private string _connectionString = Environment.GetEnvironmentVariable("PERSISTENCE_CONNECTION_STRING");
-        private ILogger _logger;
+        private string _connectionString;
+        private IConfiguration _config;
+        private ILogger<BeanieService> _logger;
 
-        public BeanieService()
+        public BeanieService(ILogger<BeanieService> logger, IConfiguration config) 
         {
-            _logger = LoggerFactory.Create(configure => configure.AddConsole()).CreateLogger(nameof(BeanieService));
+            //_logger = LoggerFactory.Create(configure => configure.AddConsole()).CreateLogger(nameof(BeanieService));
+            _logger = logger;
+            _config = config;
         }
 
-        public List<PlayerEntity> GetPlayers()
+        public List<Player> GetPlayers()
         {
+            _connectionString = _config["PERSISTENCE_CONNECTION_STRING"];
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
             var transaction = connection.BeginTransaction();
 
             try
             {
-                var players = connection.Query<PlayerEntity>("SELECT * FROM player", transaction).ToList();
+                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM player", transaction).ToList();
                 transaction.Commit();
-                players.ForEach(plr => Console.WriteLine(plr));
+                var players = playerEntities.Select(player => new Player() { 
+                    Name = player.UserName
+                }).ToList();
                 return players;
             }
             catch (Exception ex)

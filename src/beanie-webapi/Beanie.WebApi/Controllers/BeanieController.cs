@@ -11,9 +11,9 @@ namespace Beanie.WebApi.Controllers
     public class BeanieController : ControllerBase
     {
         private readonly ILogger<BeanieController> _logger;
-        private BeanieService _service;
+        private IBeanieService _service;
 
-        public BeanieController(ILogger<BeanieController> logger, BeanieService service)
+        public BeanieController(ILogger<BeanieController> logger, IBeanieService service)
         {
             _logger = logger;
             _service = service;

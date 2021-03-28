@@ -20,7 +20,7 @@ namespace Beanie.WebApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddKeyPerFile("/secrets", false);
+                    config.AddKeyPerFile("/secrets", true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

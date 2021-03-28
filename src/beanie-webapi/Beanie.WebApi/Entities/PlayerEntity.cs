@@ -1,5 +1,8 @@
-﻿namespace Beanie.WebApi.Entities
+﻿using System;
+
+namespace Beanie.WebApi.Entities
 {
+    [Serializable]
     public class PlayerEntity
     {
         public string UserName { get; set; }

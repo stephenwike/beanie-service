@@ -8,8 +8,8 @@ namespace Beanie.WebApi.Tests
         [Fact]
         public void Test1()
         {
-            var service = new BeanieService();
-            var players = service.GetPlayers();
+            //var service = new BeanieService();
+            //var players = service.GetPlayers();
         }
     }
 }
