@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BeanieService } from 'src/app/services/beanie-service';
 
 @Component({
@@ -10,7 +11,7 @@ export class CreateGameComponent implements OnInit {
 
   players: string[] = [ "Stephen", "James", "Jenni", "Aaron" ];
 
-  constructor(private beanieService: BeanieService) { }
+  constructor(private beanieService: BeanieService, private route: Router) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +22,8 @@ export class CreateGameComponent implements OnInit {
 
   StartGame(): void {
     let players = this.players.filter(x => x != "");
-    this.beanieService.StartGame(players);
+    console.log(players);
+    this.beanieService.StartGame(players).subscribe({next: () => {}, error: (error) => console.log(error)});
+    this.route.parseUrl('/');
   }
 }

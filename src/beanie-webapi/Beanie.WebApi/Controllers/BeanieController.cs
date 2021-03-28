@@ -29,8 +29,15 @@ namespace Beanie.WebApi.Controllers
         [HttpPost("creategame")]
         public IActionResult CreateNewGame([FromBody]string[] players)
         {
-            Persistence.AddGame(players);
-            return Ok();
+            try
+            {
+                _service.CreateNewGame(players);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("players")]

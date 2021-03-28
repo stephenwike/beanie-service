@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { GameBoard } from '../models/gameboard.model';
 import { PlayerScore } from '../models/player-score.model';
 
@@ -10,19 +11,19 @@ import { PlayerScore } from '../models/player-score.model';
 })
 export class BeanieService {
 
-  baseUri = "https://localhost:5001/beanie"
+  baseUri = environment.beanie_url;
 
   constructor(private http: HttpClient) { }
 
-  StartGame(players: string[]) {
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/json',
-    //   'Access-Control-Request-Method' : 'POST'
-    // });
-    // const options = {
-    //   headers
-    // };
-    this.http.post(this.baseUri + "/start", players).subscribe({next: () => {}, error: (error) => console.log(error)});
+  StartGame(players: string[]): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const options = {
+      headers
+    };
+    
+    return this.http.post(this.baseUri + "creategame", players, options);//.subscribe({next: () => {}, error: (error) => console.log(error)});
   }
 
   SendRoundScores(round: number, scores: PlayerScore[]) {

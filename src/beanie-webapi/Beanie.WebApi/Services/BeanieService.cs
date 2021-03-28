@@ -18,14 +18,46 @@ namespace Beanie.WebApi.Services
 
         public BeanieService(ILogger<BeanieService> logger, IConfiguration config) 
         {
-            //_logger = LoggerFactory.Create(configure => configure.AddConsole()).CreateLogger(nameof(BeanieService));
             _logger = logger;
             _config = config;
+            _connectionString = _config["PERSISTENCE_CONNECTION_STRING"];
+        }
+
+        public void CreateNewGame(string[] players)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+            var transaction = connection.BeginTransaction();
+
+            try
+            {
+                var sql =
+                @"INSERT INTO public.player(username, gameid, scores, turn)
+	                VALUES (@UserName, @GameId, @Scores, @Turn);";
+
+                players.ToList().ForEach(player =>
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@UserName", player);
+                    parameters.Add("@GameId", 1);
+                    parameters.Add("@Scores", "");
+                    parameters.Add("@Turn", 1);
+
+                    var affectedRows = connection.Execute(sql: sql, param: parameters, transaction: transaction);
+                });
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                transaction.Rollback();
+                throw ex;
+            }
         }
 
         public List<Player> GetPlayers()
         {
-            _connectionString = _config["PERSISTENCE_CONNECTION_STRING"];
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
             var transaction = connection.BeginTransaction();

@@ -6,5 +6,6 @@ namespace Beanie.WebApi.Services
     public interface IBeanieService
     {
         List<Player> GetPlayers();
+        void CreateNewGame(string[] players);
     }
 }
