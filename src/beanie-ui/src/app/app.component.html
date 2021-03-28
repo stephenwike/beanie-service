@@ -1,3 +1,42 @@
-<h1 class='center'>BEANIE</h1>
+<div class="app-container-base">
 
-<router-outlet></router-outlet>
+    <div class="app-container">
+  
+      <mat-toolbar color="primary">
+        <!-- <div class="welcome"></div> -->
+        <button mat-button routerLink="/">
+        <mat-icon>home</mat-icon> 
+            {{title}}</button>
+      
+        <!-- This fills the remaining space of the current row -->
+        <span class="fill-remaining-space"></span>
+        <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+            <button mat-button routerLink="/kiosk" disabled>Kiosk</button>
+            <button mat-button routerLink="/controller" disabled>Controller</button>
+        </div>
+        <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+         <mat-icon>menu</mat-icon>
+        </button>
+  
+        <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+          <button mat-button (click)="auth.logout({ returnTo: document.location.origin })">
+            Log out
+          </button>
+        </ng-container>
+    
+        <ng-template #loggedOut>
+          <button mat-button (click)="auth.loginWithRedirect()">Log in</button>
+        </ng-template>
+      
+      </mat-toolbar>
+      <mat-menu x-position="before" #menu="matMenu">
+        <button mat-menu-item routerLink="/kiosk">Kiosk</button>
+        <button mat-menu-item routerLink="/dashboard">Controller</button>
+        <!--<button mat-menu-item>Help</button>-->
+      </mat-menu>
+  
+      <router-outlet></router-outlet>
+    
+    </div>
+    
+</div>

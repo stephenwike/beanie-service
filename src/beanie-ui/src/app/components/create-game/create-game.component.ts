@@ -9,7 +9,8 @@ import { BeanieService } from 'src/app/services/beanie-service';
 })
 export class CreateGameComponent implements OnInit {
 
-  players: string[] = [ "Stephen", "James", "Jenni", "Aaron" ];
+  //players: string[] = [ "Stephen", "James", "Jenni", "Aaron" ];
+  players: string[] = [ "", "", "" ];
 
   constructor(private beanieService: BeanieService, private route: Router) { }
 
@@ -24,6 +25,6 @@ export class CreateGameComponent implements OnInit {
     let players = this.players.filter(x => x != "");
     console.log(players);
     this.beanieService.StartGame(players).subscribe({next: () => {}, error: (error) => console.log(error)});
-    this.route.parseUrl('/');
+    this.route.navigate(['/dashboard']);
   }
 }
