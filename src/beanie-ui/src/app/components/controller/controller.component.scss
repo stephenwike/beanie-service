@@ -1,12 +1,70 @@
+h1 {
+    margin: 25px;
+    text-align: center;
+}
+
+h2 {
+    margin: 5px;
+}
+
+p {
+    margin: 0;
+    text-align: center;
+}
+
+label {
+    text-align: center;
+}
+
+.container {
+    margin: auto;
+    width: 500px;
+    border: 1px solid black;
+}
+
 .round-header {
     width: 100%;
     text-align: center;
+    border: 1px solid black;
+    border-style: none none solid none;
+}
+
+.score-header {
+    margin: 25px 0 10px 0;
+    font-weight: bold;
 }
 
 .score-form {
     display: flex;
 }
 
+.score-input {
+    margin: 20px 0;
+}
+
 .player-score {
     width:40%;
+}
+
+.save-button {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid black;
+    border-style: solid none none  none;
+    background: transparent;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    padding: 20px;
+}
+
+.penaltyCheckbox {
+    flex-direction: column;
+}
+
+.calculator-button {
+    border: none;
+    background: transparent;
 }

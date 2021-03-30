@@ -1,7 +1,18 @@
-<button  routerLink="kiosk" mat-button>
-    <app-beanie-kiosk></app-beanie-kiosk>
-</button>
+<!-- <button  routerLink="/scoreboard" mat-button>
+    <app-scoreboard></app-scoreboard>
+</button> -->
 
-<button routerLink="controller" mat-button>
-    <app-controller></app-controller>
-</button>
+<div class="container" fxLayout="row" fxFlex>
+
+    <!-- <button class="button" routerLink="/controller" fxFlex="30">
+        <app-controller></app-controller>
+    </button>
+
+    <button class="button" routerLink="/scoreboard" fxFlex="70">
+        <app-scoreboard></app-scoreboard>
+    </button> -->
+
+    <app-controller fxFlex="30"></app-controller>
+
+    <app-scoreboard fxFlex="70"></app-scoreboard>
+</div>

@@ -1,0 +1,24 @@
+<h1>Beanie Scoreboard</h1>
+
+<div class="container">
+    <mat-grid-list *ngIf="scoreBoard && scoreBoard.players" cols="{{ scoreBoard.players.length + 2 }}" rowHeight="5:1">
+
+        <!--HEADER-->
+        <mat-grid-tile class="grid-tile">ROUND</mat-grid-tile>
+        <mat-grid-tile class="grid-tile" *ngFor="let player of scoreBoard.players">{{ player.name }}</mat-grid-tile>
+        <mat-grid-tile class="grid-tile">Dealer</mat-grid-tile>
+    
+        <!--SCORES-->
+        <div *ngFor="let round of rounds; let i = index;">
+            <mat-grid-tile class="grid-tile">{{ round }}</mat-grid-tile>
+            <mat-grid-tile class="grid-tile" *ngFor="let player of scoreBoard.players">{{ player.scores[i] }}</mat-grid-tile>
+            <mat-grid-tile class="grid-tile">James</mat-grid-tile>
+        </div>
+    
+        <!--TOTAL-->
+        <mat-grid-tile class="grid-tile">Total</mat-grid-tile>
+        <mat-grid-tile class="grid-tile" *ngFor="let player of scoreBoard.players">{{ Sum(player.scores) }}</mat-grid-tile>
+        <mat-grid-tile class="grid-tile"></mat-grid-tile>
+        
+    </mat-grid-list>
+</div>

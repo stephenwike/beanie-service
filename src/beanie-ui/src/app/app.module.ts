@@ -9,7 +9,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { BeanieCalculatorComponent } from './beanie-calculator/beanie-calculator.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialsModule } from './modules/app-materials.module';
-import { BeanieKioskComponent } from './beanie-kiosk/beanie-kiosk.component';
 import { BeanieControllerComponent } from './beanie-controller/beanie-controller.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -19,19 +18,20 @@ import { CreateGameComponent } from './components/create-game/create-game.compon
 import { FindGameComponent } from './components/find-game/find-game.component';
 import { AuthModule } from '@auth0/auth0-angular';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     BeanieCalculatorComponent,
-    BeanieKioskComponent,
     BeanieControllerComponent,
     ControllerComponent,
     NewOrExistingPromptComponent,
     CreateGameComponent,
     FindGameComponent,
-    DashboardComponent
+    DashboardComponent,
+    ScoreboardComponent
   ],
   imports: [
     BrowserModule,

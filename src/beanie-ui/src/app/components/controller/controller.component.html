@@ -1,14 +1,43 @@
-<div class="round-header">
-    <h2>Round {{ currentRound + 1}}</h2>
-    <h3>{{ roundWilds[currentRound] }} are wild</h3>   
-    <button mat-button (click)="Previous()" [disabled]="currentRound === 0">Previous</button>
-    <button mat-button (click)="Next()" [disabled]="currentRound === roundsPlayed">Next</button> 
-</div>
+<h1>Beanie Controller</h1>
 
-<form class="score-form" fxLayout="column" fxLayoutAlign="space-around center">
-    <div *ngFor="let player of playerArray" fxLayout="row" fxLayoutAlign="space-around center">
-        <label>{{ player }}</label>
-        <input class="player-score" matInput type="number" min="0" />
+<div class="container" fxLayout="column" >
+    <div class="round-header" fxFlex>
+        <button mat-button (click)="Previous()" [disabled]="currentRound === 0" fxFlex="10">Previous</button>
+        <div fxFlex="80">
+            <h2>ROUND {{ currentRound + 1}}</h2>
+            <p>{{ roundWilds[currentRound] }} are wild</p> 
+        </div>
+        <button mat-button (click)="Next()" [disabled]="currentRound === roundsPlayed" fxFlex="10">Next</button> 
     </div>
-    <button mat-button (click)="setScores()">Enter</button>
-</form>
+    
+    <form class="score-form" [formGroup]="scoreForm" fxLayout="column">
+
+        <div class="score-header" fxFlex>
+            <p fxFlex="33">Player</p>
+            <p fxFlex="33">Score</p>
+            <p fxFlex="33">Penatly?</p>
+        </div>
+        <div class="score-input" *ngFor="let player of playerArray" fxLayout="row">
+            <label fxFlex="33">{{ player }}</label>
+            <div fxFlex="33">
+                <div fxFlex>
+                    <input fxFlex="90" matInput  class="player-score" type="number" min="0" />
+                    <button class="calculator-button">
+                        <mat-icon fxFlex="10" aria-hidden="false" aria-label="Score calculator icon" >calculate</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="penaltyCheckbox" fxFlex="33" fxLayoutAlign="center center">
+                <mat-checkbox></mat-checkbox>
+            </div>
+            
+        </div>
+    </form>
+
+
+    <p class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+    </p>
+
+    <button class="save-button" (click)="setScores()">SAVE SCORES</button>
+</div>

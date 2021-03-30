@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BeanieKioskComponent } from './beanie-kiosk.component';
+import { ScoreboardComponent } from './scoreboard.component';
 
-describe('BeanieKioskComponent', () => {
-  let component: BeanieKioskComponent;
-  let fixture: ComponentFixture<BeanieKioskComponent>;
+describe('ScoreboardComponent', () => {
+  let component: ScoreboardComponent;
+  let fixture: ComponentFixture<ScoreboardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BeanieKioskComponent ]
+      declarations: [ ScoreboardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BeanieKioskComponent);
+    fixture = TestBed.createComponent(ScoreboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

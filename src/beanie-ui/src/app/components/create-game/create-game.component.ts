@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Player } from 'src/app/models/player.model';
 import { BeanieService } from 'src/app/services/beanie-service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
   selector: 'app-create-game',
@@ -9,22 +13,54 @@ import { BeanieService } from 'src/app/services/beanie-service';
 })
 export class CreateGameComponent implements OnInit {
 
-  //players: string[] = [ "Stephen", "James", "Jenni", "Aaron" ];
-  players: string[] = [ "", "", "" ];
+  playersForm: FormGroup;
 
-  constructor(private beanieService: BeanieService, private route: Router) { }
+  //players: string[] = [ "Stephen", "James", "Jenni", "Aaron" ];
+
+  get players(): FormArray {
+    return <FormArray>this.playersForm.get('players');
+  }
+
+  constructor(
+    private fb: FormBuilder, 
+    private beanieService: BeanieService, 
+    private storage: LocalStorageService, 
+    private route: Router,
+    private util: UtilityService) { }
 
   ngOnInit(): void {
+    this.playersForm = new FormGroup({
+      players: this.fb.array([ this.BuildPlayer(), this.BuildPlayer(), this.BuildPlayer() ])
+    });
+  }
+
+  BuildPlayer(): FormGroup {
+    return this.fb.group({
+      username: ''
+    })
   }
 
   AddPlayer(): void {
-    this.players.push("");
+    this.players.push(this.BuildPlayer());
   }
 
   StartGame(): void {
-    let players = this.players.filter(x => x != "");
+    let players = this.players.controls.map(x => {
+      let player = new Player()
+      player.name = x.value.username;
+      return player;
+    });
+
+    this.util.Shuffle(players);
+
+    for (let i = 0; i < players.length; ++i)
+    {
+      players[i].turn = i + 1;
+    }
+    
     console.log(players);
-    this.beanieService.StartGame(players).subscribe({next: () => {}, error: (error) => console.log(error)});
+    this.storage.set("players", players);
+    //this.beanieService.StartGame(players).subscribe({next: () => {}, error: (error) => console.log(error)});
     this.route.navigate(['/dashboard']);
   }
 }

@@ -1,11 +1,26 @@
 <div class="container">
     <h2 class="header"><mat-label>Players</mat-label></h2>
 
-    <form>
-        <div class="players-form-array" fxLayout="column" fxLayoutAlign="start start" *ngFor="let player of players">
-            <mat-form-field appearance="standard">
-                <input matInput value="{{player}}" placeholder="Enter a player name..."/>
-            </mat-form-field>
+    <form [formGroup]="playersForm">
+
+        <div formArrayName="players" *ngFor="let player of players.controls; let i = index">
+
+            <div [formGroupName]="i">
+
+                <input matInput 
+                    formControlName="username" 
+                    type="text"
+                    id="usernameId"
+                    required
+                    placeholder="Enter a player name..."/>
+
+            </div>
+            <!-- <div class="players-form-array" fxLayout="column" fxLayoutAlign="start start" *ngFor="let player of players; let i = index">
+                <mat-form-field appearance="standard">
+                    <input [(ngModel)]="players[i]" matInput value="{{player}}" placeholder="Enter a player name..."/>
+                </mat-form-field>
+            </div> -->
+
         </div>
         
     </form>
