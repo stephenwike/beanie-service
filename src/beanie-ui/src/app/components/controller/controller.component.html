@@ -17,23 +17,28 @@
             <p fxFlex="33">Score</p>
             <p fxFlex="33">Penatly?</p>
         </div>
-        <div class="score-input" *ngFor="let player of playerArray" fxLayout="row">
-            <label fxFlex="33">{{ player }}</label>
-            <div fxFlex="33">
-                <div fxFlex>
-                    <input fxFlex="90" matInput  class="player-score" type="number" min="0" />
-                    <button class="calculator-button">
-                        <mat-icon fxFlex="10" aria-hidden="false" aria-label="Score calculator icon" >calculate</mat-icon>
-                    </button>
-                </div>
-            </div>
-            <div class="penaltyCheckbox" fxFlex="33" fxLayoutAlign="center center">
-                <mat-checkbox></mat-checkbox>
-            </div>
-            
-        </div>
-    </form>
 
+        <div formArrayName="players" *ngFor="let player of players.controls; let i = index">
+
+            <div [formGroupName]="i">
+
+                <label fxFlex="33">{{ playerNames[i] }}</label>
+                <div fxFlex="33">
+                    <div class="score-input-container" fxFlex>
+                        <input formControlName="points" fxFlex="90" matInput autocomplete="off" class="player-score" type="number" min="0" />
+                        <button class="calculator-button">
+                            <mat-icon fxFlex="10" aria-hidden="false" aria-label="Score calculator icon" >calculate</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="penaltyCheckbox" fxFlex="33" fxLayoutAlign="center start">
+                    <mat-checkbox formControlName="penalty"></mat-checkbox>
+                </div>
+
+            </div>           
+        </div>
+
+    </form>
 
     <p class="error-message" *ngIf="errorMessage">
         {{ errorMessage }}

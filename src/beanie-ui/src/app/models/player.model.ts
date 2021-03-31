@@ -1,5 +1,7 @@
+import { PlayerScore } from './player-score.model';
+
 export class Player {
     name: string;
-    scores: number[] = [13];
-    turn: number;
+    scores: PlayerScore[] = new Array<PlayerScore>(13);
+    turnOrder: number;
 }

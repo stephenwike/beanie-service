@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Player } from 'src/app/models/player.model';
-import { BeanieService } from 'src/app/services/beanie-service';
+import { ScoreBoard } from 'src/app/models/scoreboard.model';
+import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
@@ -14,8 +15,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 export class CreateGameComponent implements OnInit {
 
   playersForm: FormGroup;
-
-  //players: string[] = [ "Stephen", "James", "Jenni", "Aaron" ];
+  gameId: string = "NJJKRS";
 
   get players(): FormArray {
     return <FormArray>this.playersForm.get('players');
@@ -23,8 +23,7 @@ export class CreateGameComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private beanieService: BeanieService, 
-    private storage: LocalStorageService, 
+    private manager: BeanieManagerService, 
     private route: Router,
     private util: UtilityService) { }
 
@@ -55,12 +54,11 @@ export class CreateGameComponent implements OnInit {
 
     for (let i = 0; i < players.length; ++i)
     {
-      players[i].turn = i + 1;
+      players[i].turnOrder = i + 1;
     }
     
     console.log(players);
-    this.storage.set("players", players);
-    //this.beanieService.StartGame(players).subscribe({next: () => {}, error: (error) => console.log(error)});
+    this.manager.CreateNewScoreBoard(this.gameId, players);
     this.route.navigate(['/dashboard']);
   }
 }

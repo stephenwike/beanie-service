@@ -1,12 +1,14 @@
 CREATE TABLE Game (
-	id VARCHAR (48) PRIMARY KEY
+	id TEXT PRIMARY KEY,
+	activeround INT,
+	latestround INT
 );
 
 CREATE TABLE Player (
 	username VARCHAR (48) NOT NULL,
 	gameid VARCHAR (48) NOT NULL,
 	scores TEXT,
-	turn INT,
+	turnorder INT,
 	PRIMARY KEY(username, gameid),
 	CONSTRAINT fk_game
       FOREIGN KEY(gameid) 

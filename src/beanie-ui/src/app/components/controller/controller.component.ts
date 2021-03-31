@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { EventEmitter } from '@angular/core';
+import { ScoreBoard } from 'src/app/models/scoreboard.model';
+import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
 import { PlayerScore } from 'src/app/models/player-score.model';
-import { BeanieService } from 'src/app/services/beanie-service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-controller',
@@ -11,40 +12,46 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 })
 export class ControllerComponent implements OnInit {
 
-  // mockPlayerArray: string[] = ["James", "Aaron", "Leander", "Stephen", "Tim", "Jenni"];
+  @Input() scoreBoard: ScoreBoard;
+  @Output() changeDetected: EventEmitter<any> = new EventEmitter<any>();
 
-  playerArray: string[];
+  //playerArray: string[];
   roundWilds: string[] = ["Aces", "Twos", "Threes", "Fours", "Fives", "Sixes", "Sevens", "Eights", "Nines", "Tens", "Jacks", "Queens", "Kings"];
   scoreForm: FormGroup;
   currentRound: number = 0;
   roundsPlayed: number = 0;
-  scores: PlayerScore[][];
+  errorMessage: string = "";//"There are errors: This is a very long error for testing the formatting of the error message on the page.";
+  playerNames: string[] = [];
 
-  errorMessage: string = "There are errors: This is a very long error for testing the formatting of the error message on the page.";
+  get players(): FormArray {
+    return <FormArray>this.scoreForm.get('players');
+  }
 
   constructor(
     private fb: FormBuilder, 
-    private storage: LocalStorageService,
-    private beanieService: BeanieService) { }
+    private manager: BeanieManagerService) { }
 
-  ngOnInit(): void {
-    // TODO: Remove this line.  This will be input from a rest request or passed as input.
-    this.playerArray = this.storage.get("players");// = this.mockPlayerArray;
-
+  ngOnInit(): void {  
     this.scoreForm = this.fb.group({
       players: this.fb.array([])
     })
-    // let frame: PlayerScore[] = [];
-    // this.playerArray.forEach(player => {
-    //   frame.push({ Name: player, Score: 0})
-    // });
-    // this.scores = new Array(13).fill(frame);
-    // console.log(this.scores);
+
+    this.setPlayers();
+  }
+
+  private setPlayers(): void {
+    this.scoreBoard.players.forEach(x => {
+      this.playerNames.push(x.name);
+
+      this.players.push(this.fb.group({
+        points: null,
+        penalty: false
+      }));
+    });
   }
 
   setScores(): void {
-    // Send scores for the current round.
-    //this.beanieService.SendRoundScores(this.scores[this.currentRound]);
+    this.manager.SetScores(this.players.value);
 
     // If the current round is index 12, there are no more rounds
     if (this.currentRound === 12)
@@ -56,16 +63,32 @@ export class ControllerComponent implements OnInit {
     // If the current round is the latest round played (i.e. Not correcting an earlier score)
     // Increase the rounds played and current round counters.
     if (this.currentRound === this.roundsPlayed) {
-      ++this.currentRound;
-      ++this.roundsPlayed;
+      this.manager.SetActiveRound(++this.currentRound);
+      this.manager.SetLatestRound(++this.roundsPlayed);
     }
+    // Else return to the newest frame
+    else {
+      this.currentRound = this.roundsPlayed;
+      this.manager.SetActiveRound(this.roundsPlayed);
+    }
+
+    this.scoreForm.reset();
+    this.changeDetected.emit(null);
   }
 
   Previous(): void {
-    --this.currentRound;
+    this.manager.SetActiveRound(--this.currentRound);
+    let roundScores = this.manager.GetRoundScores();
+    console.log("Round SCORES");
+    console.log(roundScores);
+    this.players.patchValue(roundScores);
+    this.changeDetected.emit(null);
   }
 
   Next(): void {
-    ++this.currentRound;
+    this.manager.SetActiveRound(++this.currentRound);
+    let roundScores = this.manager.GetRoundScores();
+    this.players.patchValue(roundScores);
+    this.changeDetected.emit(null);
   }
 }

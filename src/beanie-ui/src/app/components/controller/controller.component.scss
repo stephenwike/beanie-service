@@ -30,12 +30,17 @@ label {
 }
 
 .score-header {
-    margin: 25px 0 10px 0;
+    margin: 25px 0;
     font-weight: bold;
 }
 
 .score-form {
     display: flex;
+    margin-bottom: 25px;
+}
+
+.score-input-container {
+    margin-bottom: 10px;
 }
 
 .score-input {

@@ -23,7 +23,7 @@ namespace Beanie.WebApi.Services
             _connectionString = _config["PERSISTENCE_CONNECTION_STRING"];
         }
 
-        public void CreateNewGame(string[] players)
+        public void CreateNewGame(ScoreBoard scoreboard)
         {
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
@@ -31,17 +31,26 @@ namespace Beanie.WebApi.Services
 
             try
             {
-                var sql =
-                @"INSERT INTO public.player(username, gameid, scores, turn)
-	                VALUES (@UserName, @GameId, @Scores, @Turn);";
+                // Insert Game
+                var sql = @"INSERT INTO public.game(id, activeround, latestround)
+	                VALUES (@Id, @ActiveRound, @LatestRound);";
 
-                players.ToList().ForEach(player =>
+                var affectedRows = connection.Execute(
+                    sql: sql, 
+                    param: new { Id = scoreboard.GameId, ActiveRound = scoreboard.ActiveRound, LatestRound = scoreboard.LatestRound}, 
+                    transaction: transaction);
+
+                sql = @"INSERT INTO public.player(username, gameid, scores, turnorder)
+	                VALUES (@UserName, @GameId, @Scores, @TurnOrder);";
+
+                // Insert Players for Game
+                scoreboard.Players.ToList().ForEach(player =>
                 {
                     var parameters = new DynamicParameters();
-                    parameters.Add("@UserName", player);
-                    parameters.Add("@GameId", 1);
+                    parameters.Add("@UserName", player.Name);
+                    parameters.Add("@GameId", scoreboard.GameId);
                     parameters.Add("@Scores", "");
-                    parameters.Add("@Turn", 1);
+                    parameters.Add("@TurnOrder", player.TurnOrder);
 
                     var affectedRows = connection.Execute(sql: sql, param: parameters, transaction: transaction);
                 });

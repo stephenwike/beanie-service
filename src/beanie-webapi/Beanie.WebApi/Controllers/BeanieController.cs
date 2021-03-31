@@ -1,4 +1,5 @@
 ﻿using Beanie.WebApi.Core;
+using Beanie.WebApi.Models;
 using Beanie.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -19,19 +20,19 @@ namespace Beanie.WebApi.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public IActionResult GetScoreBoard()
-        {
-            var scoreboard = Persistence.GetScoreBoard();
-            return Ok(scoreboard);
-        }
+        //[HttpGet]
+        //public IActionResult GetScoreBoard()
+        //{
+        //    var scoreboard = Persistence.GetScoreBoard();
+        //    return Ok(scoreboard);
+        //}
 
         [HttpPost("creategame")]
-        public IActionResult CreateNewGame([FromBody]string[] players)
+        public IActionResult CreateNewGame([FromBody]ScoreBoard scoreboard)
         {
             try
             {
-                _service.CreateNewGame(players);
+                _service.CreateNewGame(scoreboard);
                 return Ok();
             }
             catch (Exception ex)

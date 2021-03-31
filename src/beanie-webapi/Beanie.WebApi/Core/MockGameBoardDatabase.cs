@@ -21,17 +21,17 @@ namespace Beanie.WebApi.Core
             };
         }
 
-        internal void SetRoundScores(int round, PlayerScore[] playerScores)
-        {
-            playerScores.ToList().ForEach(player =>
-            {
-                _scoreboard.Players.Where(x => x.Name == player.Name).First().Scores[round] = player.Score;
-            });
-        }
+        //internal void SetRoundScores(int round, PlayerScore[] playerScores)
+        //{
+        //    playerScores.ToList().ForEach(player =>
+        //    {
+        //        _scoreboard.Players.Where(x => x.Name == player.Name).First().Scores[round] = player.Score;
+        //    });
+        //}
 
-        internal ScoreBoard GetScoreBoard()
-        {
-            return _scoreboard;
-        }
+        //internal ScoreBoard GetScoreBoard()
+        //{
+        //    return _scoreboard;
+        //}
     }
 }

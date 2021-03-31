@@ -12,7 +12,7 @@
         <app-scoreboard></app-scoreboard>
     </button> -->
 
-    <app-controller fxFlex="30"></app-controller>
+    <app-controller [scoreBoard]="scoreBoard" (changeDetected)="onChangeDetected($event)" fxFlex="30"></app-controller>
 
-    <app-scoreboard fxFlex="70"></app-scoreboard>
+    <app-scoreboard [scoreBoard]="scoreBoard" fxFlex="70"></app-scoreboard>
 </div>

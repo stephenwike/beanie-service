@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BeanieCalculatorComponent } from '../beanie-calculator/beanie-calculator.component';
-import { BeanieControllerComponent } from '../beanie-controller/beanie-controller.component';
 import { ControllerComponent } from '../components/controller/controller.component';
 import { CreateGameComponent } from '../components/create-game/create-game.component';
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { FindGameComponent } from '../components/find-game/find-game.component';
 import { NewOrExistingPromptComponent } from '../components/new-or-existing-prompt/new-or-existing-prompt.component';
+import { ScoreCalculatorComponent } from '../components/score-calculator/score-calculator.component';
 import { ScoreboardComponent } from '../components/scoreboard/scoreboard.component';
-import { PageNotFoundComponent } from '../page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', component: NewOrExistingPromptComponent },
@@ -16,13 +15,8 @@ const routes: Routes = [
   { path: 'findgame', component: FindGameComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'scoreboard', component: ScoreboardComponent },
-
-  
   { path: 'controller', component: ControllerComponent },
-  { path: 'calculator', component: BeanieCalculatorComponent },
-  { path: 'setup', component: BeanieControllerComponent },
-
-
+  { path: 'calculator', component: ScoreCalculatorComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

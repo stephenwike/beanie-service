@@ -1,4 +1,4 @@
 export class PlayerScore {
-    name: string;
-    scores: number;
+    points: number;
+    penalty: boolean;
 }

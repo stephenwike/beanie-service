@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { GameBoard } from '../models/gameboard.model';
+import { ScoreBoard } from '../models/scoreboard.model';
 import { PlayerScore } from '../models/player-score.model';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class BeanieService {
 
   constructor(private http: HttpClient) { }
 
-  StartGame(players: string[]): Observable<any> {
+  StartGame(scoreboard: ScoreBoard): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
@@ -22,14 +22,14 @@ export class BeanieService {
       headers
     };
     
-    return this.http.post(this.baseUri + "creategame", players, options);
+    return this.http.post(this.baseUri + "creategame", scoreboard, options);
   }
 
   SendRoundScores(round: number, scores: PlayerScore[]) {
     this.http.put(this.baseUri + `/score/${round}`, JSON.stringify(scores));
   }
 
-  GetScoreBoard(): Observable<GameBoard> {
-    return this.http.get<GameBoard>(this.baseUri);
+  GetScoreBoard(): Observable<ScoreBoard> {
+    return this.http.get<ScoreBoard>(this.baseUri);
   }
 }

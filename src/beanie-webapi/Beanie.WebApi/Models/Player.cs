@@ -3,6 +3,7 @@
     public class Player
     {
         public string Name { get; set; }
-        public int[] Scores { get; set; } = new int[13];
+        public PlayerScore[] Scores { get; set; }
+        public int TurnOrder { get; set; }
     }
 }

@@ -10,9 +10,9 @@
     
         <!--SCORES-->
         <div *ngFor="let round of rounds; let i = index;">
-            <mat-grid-tile class="grid-tile">{{ round }}</mat-grid-tile>
-            <mat-grid-tile class="grid-tile" *ngFor="let player of scoreBoard.players">{{ player.scores[i] }}</mat-grid-tile>
-            <mat-grid-tile class="grid-tile">James</mat-grid-tile>
+            <mat-grid-tile class="grid-tile" [style.background]="(scoreBoard.activeRound == i) ? 'lightblue' : 'transparent'">{{ round }}</mat-grid-tile>
+            <mat-grid-tile class="grid-tile" [style.background]="(scoreBoard.activeRound == i) ? 'lightblue' : 'transparent'" *ngFor="let player of scoreBoard.players">{{ DisplayScore(player.scores[i]) }}</mat-grid-tile>
+            <mat-grid-tile class="grid-tile" [style.background]="(scoreBoard.activeRound == i) ? 'lightblue' : 'transparent'">{{ scoreBoard.players[i % scoreBoard.players.length].name }}</mat-grid-tile>
         </div>
     
         <!--TOTAL-->

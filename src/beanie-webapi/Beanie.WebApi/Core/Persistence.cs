@@ -12,14 +12,14 @@ namespace Beanie.WebApi.Core
             _database.SetPlayers(players);
         }
 
-        internal static ScoreBoard GetScoreBoard()
-        {
-            return _database.GetScoreBoard();
-        }
+        //internal static ScoreBoard GetScoreBoard()
+        //{
+        //    return _database.GetScoreBoard();
+        //}
 
-        internal static void SetRoundScores(int round, PlayerScore[] playerScores)
-        {
-            _database.SetRoundScores(round, playerScores);
-        }
+        //internal static void SetRoundScores(int round, PlayerScore[] playerScores)
+        //{
+        //    _database.SetRoundScores(round, playerScores);
+        //}
     }
 }
