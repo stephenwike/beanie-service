@@ -1,6 +1,7 @@
 <div class="container">
     <h2 class="header"><mat-label>Players</mat-label></h2>
     <h3 class="game-id">Game ID: {{ gameId }}</h3>
+    <p>Enter players in turn order around the table.</p>
 
     <form [formGroup]="playersForm">
 
@@ -8,7 +9,7 @@
 
             <div [formGroupName]="i">
 
-                <input matInput 
+                <input class="input-username" matInput 
                     formControlName="username" 
                     type="text"
                     id="usernameId"
