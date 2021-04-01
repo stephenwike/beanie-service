@@ -7,5 +7,6 @@ namespace Beanie.WebApi.Services
     {
         List<Player> GetPlayers();
         void CreateNewGame(ScoreBoard scoreBoard);
+        ScoreBoard GetExistingGame(string id);
     }
 }

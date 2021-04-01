@@ -8,6 +8,6 @@ namespace Beanie.WebApi.Entities
         public string UserName { get; set; }
         public string GameId { get; set; }
         public string Scores { get; set; }
-        public int Turn { get; set; }
+        public int TurnOrder { get; set; }
     }
 }

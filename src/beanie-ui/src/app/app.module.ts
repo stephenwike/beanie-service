@@ -14,7 +14,6 @@ import { ControllerComponent } from './components/controller/controller.componen
 import { NewOrExistingPromptComponent } from './components/new-or-existing-prompt/new-or-existing-prompt.component';
 import { CreateGameComponent } from './components/create-game/create-game.component';
 import { FindGameComponent } from './components/find-game/find-game.component';
-// import { AuthModule } from '@auth0/auth0-angular';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ScoreboardComponent } from './components/scoreboard/scoreboard.component';
 import { ScoreCalculatorComponent } from './components/score-calculator/score-calculator.component';
@@ -40,11 +39,7 @@ import { ScoreCalculatorComponent } from './components/score-calculator/score-ca
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    HttpClientModule,
-    // AuthModule.forRoot({
-    //   domain: 'sw-services.us.auth0.com',
-    //   clientId: 'Re8a71sSqj9nCR7ufVwRafDa89AU7x9b'
-    // })
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

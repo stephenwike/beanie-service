@@ -3,6 +3,7 @@ using Beanie.WebApi.Models;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,44 @@ namespace Beanie.WebApi.Services
             }
         }
 
+        public ScoreBoard GetExistingGame(string id)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+
+            try
+            {
+                var gameEntity = connection.Query<GameEntity>("SELECT * FROM public.game WHERE id = @Id", new { Id = id }).FirstOrDefault();
+                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM public.player WHERE gameid = @Id", new { Id = id }).ToList();
+
+                connection.Dispose();
+
+                var players = playerEntities.Select(entity => new Player()
+                {
+                    Name = entity.UserName,
+                    Scores = JsonConvert.DeserializeObject<List<PlayerScore>>(entity.Scores),
+                    TurnOrder = entity.TurnOrder
+                }).ToList();
+
+                var scoreboard = new ScoreBoard()
+                {
+                    GameId = gameEntity.Id,
+                    ActiveRound = gameEntity.ActiveRound,
+                    LatestRound = gameEntity.LatestRound,
+                    Players = players
+                };
+
+                return scoreboard;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                connection.Dispose();
+
+                throw ex;
+            }
+        }
+
         public List<Player> GetPlayers()
         {
             using var connection = new NpgsqlConnection(_connectionString);
@@ -75,6 +114,8 @@ namespace Beanie.WebApi.Services
             {
                 var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM player", transaction).ToList();
                 transaction.Commit();
+                connection.Dispose();
+
                 var players = playerEntities.Select(player => new Player() { 
                     Name = player.UserName
                 }).ToList();
@@ -84,6 +125,8 @@ namespace Beanie.WebApi.Services
             {
                 _logger.LogError(ex.Message);
                 transaction.Rollback();
+                connection.Dispose();
+
                 throw ex;
             }
         }

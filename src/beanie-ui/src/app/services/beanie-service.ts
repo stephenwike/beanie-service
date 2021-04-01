@@ -29,7 +29,7 @@ export class BeanieService {
     this.http.put(this.baseUri + `/score/${round}`, JSON.stringify(scores));
   }
 
-  GetScoreBoard(): Observable<ScoreBoard> {
-    return this.http.get<ScoreBoard>(this.baseUri);
+  GetScoreBoard(id: string): Observable<ScoreBoard> {
+    return this.http.get<ScoreBoard>(this.baseUri + `/${id}`);
   }
 }

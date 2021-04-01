@@ -18,15 +18,15 @@
          <mat-icon>menu</mat-icon>
         </button>
   
-        <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
+        <!-- <ng-container *ngIf="auth.isAuthenticated$ | async; else loggedOut">
           <button mat-button (click)="auth.logout({ returnTo: document.location.origin })">
             Log out
           </button>
-        </ng-container>
+        </ng-container> -->
     
-        <ng-template #loggedOut>
+        <!-- <ng-template #loggedOut>
           <button mat-button (click)="auth.loginWithRedirect()">Log in</button>
-        </ng-template>
+        </ng-template> -->
       
       </mat-toolbar>
       <mat-menu x-position="before" #menu="matMenu">

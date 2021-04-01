@@ -1,5 +1,4 @@
-﻿using Beanie.WebApi.Core;
-using Beanie.WebApi.Models;
+﻿using Beanie.WebApi.Models;
 using Beanie.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,12 +19,25 @@ namespace Beanie.WebApi.Controllers
             _service = service;
         }
 
-        //[HttpGet]
-        //public IActionResult GetScoreBoard()
-        //{
-        //    var scoreboard = Persistence.GetScoreBoard();
-        //    return Ok(scoreboard);
-        //}
+        [HttpGet]
+        [Route("{id?}")]
+        public IActionResult GetScoreBoard(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return BadRequest("API requires game id.");
+            }
+
+            try
+            {
+                var scoreboard = _service.GetExistingGame(id);
+                return Ok(scoreboard);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
 
         [HttpPost("creategame")]
         public IActionResult CreateNewGame([FromBody]ScoreBoard scoreboard)

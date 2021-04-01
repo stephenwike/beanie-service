@@ -1,2 +1,14 @@
-<h1>NOT IMPLEMENTED</h1>
-<p>Coming soon!</p>
+
+<div class="container">
+    <h1>Find Existing Game by ID.</h1>
+
+    <form [formGroup]="findForm" fxLayout="row" fxLayoutAlign="space-around center">
+        <label>Game ID:</label>
+        
+        <input formControlName="id" matInput type="text" required placeholder="Enter a game id..."/>
+    
+        <button mat-button type="button" (click)="Find()">Find</button>
+    </form>
+    
+    <!-- <p>Login to see existing games associated with your user account.</p> -->
+</div>

@@ -21,11 +21,15 @@ export class BeanieManagerService {
     scoreboard.gameId = gameId;
     scoreboard.players = players;
     this.localStorage.set(this.SCOREBOARD, scoreboard);
-    //this.service.StartGame(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
+    this.service.StartGame(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
   }
 
   GetScoreBoard() {
-    return this.localStorage.get(this.SCOREBOARD);    
+    return this.localStorage.get(this.SCOREBOARD);
+  }
+
+  GetScoreBoardById(id: string) {
+    this.service.GetScoreBoard(id);
   }
 
   SetScoreBoard(scoreboard: ScoreBoard) {

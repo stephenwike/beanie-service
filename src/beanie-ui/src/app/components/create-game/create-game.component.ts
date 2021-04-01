@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Player } from 'src/app/models/player.model';
-import { ScoreBoard } from 'src/app/models/scoreboard.model';
 import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
