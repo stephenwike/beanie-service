@@ -48,7 +48,10 @@ export class CreateGameComponent implements OnInit {
       return player;
     });
 
-    this.util.Shuffle(players);
+    var firstPlayerIndex = Math.floor(Math.random() * players.length);
+    var startSlice = players.slice(0, firstPlayerIndex);
+    var endSlice = players.slice(firstPlayerIndex);
+    players = endSlice.concat(startSlice)
 
     for (let i = 0; i < players.length; ++i)
     {
