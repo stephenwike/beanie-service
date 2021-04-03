@@ -13,7 +13,7 @@ kubectl config set-context $env:KUBERNETES_CLUSTER_NAME `
 kubectl config use-context $env:KUBERNETES_CLUSTER_NAME
 
 # Remove Failed Jobs
-kubectl delete jobs -all
+kubectl delete jobs --all
 
 # Reinstall helm
 helm uninstall $env:HELM_CHART_NAME
