@@ -11,6 +11,7 @@ jobs:
       DOCKER_REPO: stephenwike
       WEBAPI_DOCKER_IMAGE: beanie-webapi
       UI_DOCKER_IMAGE: beanie-ui
+      MIGRATION_DOCKER_IMAGE: beanie-migration
       POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
       DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       HELM_CHART_NAME: beanie
