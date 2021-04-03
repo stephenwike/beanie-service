@@ -33,11 +33,17 @@ jobs:
       - name: Build UI
         run: ./ci/build-ui.ps1
         shell: pwsh
+      - name: Build Migration
+        run: ./ci/build-migration.ps1
+        shell: pwsh
       - name: Publish WebApi
         run: ./ci/publish-webapi.ps1
         shell: pwsh
       - name: Publish UI
         run: ./ci/publish-ui.ps1
+        shell: pwsh
+      - name: Publish Migration
+        run: ./ci/publish-migration.ps1
         shell: pwsh
       - name: Deploy Helm Chart
         run: ./ci/deploy-helm-chart.ps1

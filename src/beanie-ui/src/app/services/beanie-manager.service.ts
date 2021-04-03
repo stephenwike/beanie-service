@@ -50,6 +50,7 @@ export class BeanieManagerService {
     console.log("SCOREBOARD");
     console.log(scoreboard);
     this.SetScoreBoard(scoreboard);
+    this.service.SetScores(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
   }
 
   SetLatestRound(round: number) {

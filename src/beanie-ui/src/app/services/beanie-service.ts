@@ -25,8 +25,8 @@ export class BeanieService {
     return this.http.post(this.baseUri + "creategame", scoreboard, options);
   }
 
-  SendRoundScores(round: number, scores: PlayerScore[]) {
-    this.http.put(this.baseUri + `/score/${round}`, JSON.stringify(scores));
+  SetScores(scoreboard: ScoreBoard): Observable<any> {
+    return this.http.put(this.baseUri + `scores`, scoreboard);
   }
 
   GetScoreBoard(id: string): Observable<ScoreBoard> {

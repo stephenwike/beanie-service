@@ -53,7 +53,7 @@ namespace Beanie.WebApi.Controllers
             }
         }
 
-        [HttpGet("players")]
+        [HttpGet("players")] // TODO:  Do I need this?
         public IActionResult GetPlayers()
         {
             try
@@ -67,11 +67,18 @@ namespace Beanie.WebApi.Controllers
             }
         }
 
-        //[HttpPut("score/{round}")]
-        //public IActionResult IActionResult(int round, [FromBody]PlayerScore[] playerScores)
-        //{
-        //    Persistence.SetRoundScores(round, playerScores);
-        //    return Ok();
-        //}
+        [HttpPut("scores")]
+        public IActionResult SetScores([FromBody]ScoreBoard scoreboard)
+        {
+            try
+            {
+                _service.SetScores(scoreboard);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

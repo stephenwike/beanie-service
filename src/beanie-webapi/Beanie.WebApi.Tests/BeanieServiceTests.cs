@@ -3,6 +3,7 @@ using Beanie.WebApi.Models;
 using Beanie.WebApi.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -56,7 +57,6 @@ namespace Beanie.WebApi.Tests
             var scott = scoreboard.Players.Where(x => x.Name == "Scott").FirstOrDefault();
             Assert.NotNull(scott);
             Assert.Equal(3, scott.TurnOrder);
-
         }
 
         [Fact]
@@ -108,6 +108,57 @@ namespace Beanie.WebApi.Tests
                     Assert.True(player.TurnOrder == scoreboard.Players[1].TurnOrder);
                 }
             });
+        }
+
+        [Fact]
+        public void SetScores_ValidArgs_Persists()
+        {
+            var scoreboard = new ScoreBoard()
+            {
+                ActiveRound = 3,
+                LatestRound = 6,
+                GameId = "SCORES",
+                Players = new List<Player>()
+                {
+                    new Player()
+                    {
+                        Name = "Fred",
+                        Scores = new List<PlayerScore>() { new PlayerScore() {Points = 10, Penalty = false } },
+                        TurnOrder = 1,
+                    },
+                    new Player()
+                    {
+                        Name = "Bob",
+                        Scores = new List<PlayerScore>() { new PlayerScore() {Points = 0, Penalty = true } },
+                        TurnOrder = 2,
+                    }
+                }
+            };
+
+            _fixture.ExecuteInsert(@"INSERT INTO public.game(
+	            id, activeround, latestround)
+	            VALUES ('SCORES', 0, 0);");
+
+            _fixture.ExecuteInsert(@"INSERT INTO public.player(
+	            username, gameid, scores, turnorder)
+	            VALUES ('Fred', 'SCORES', '[]', 1),
+                    ('Bob', 'SCORES', '[]', 2);");
+
+            _service.SetScores(scoreboard);
+
+            var players = _fixture.ExecuteQuery<PlayerEntity>(@"SELECT * FROM public.player;");
+
+            var fred = players.Where(x => x.UserName == "Fred").FirstOrDefault();
+            Assert.NotNull(fred);
+            var fredScores = JsonConvert.DeserializeObject<List<PlayerScore>>(fred.Scores);
+            Assert.Equal(10, fredScores[0].Points);
+            Assert.False(fredScores[0].Penalty);
+
+            var bob = players.Where(x => x.UserName == "Bob").FirstOrDefault();
+            Assert.NotNull(bob);
+            var bobScores = JsonConvert.DeserializeObject<List<PlayerScore>>(bob.Scores);
+            Assert.Equal(0, bobScores[0].Points);
+            Assert.True(bobScores[0].Penalty);
         }
     }
 }

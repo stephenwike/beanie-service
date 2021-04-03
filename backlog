@@ -1,3 +1,13 @@
 Backlog
 
 * Convert WebApi to redirect to https
+* Add validation to angular forms - controller and create-game.
+* Implement trigger end of game.  (End of game should not disable the controller from fixing errors in previous frames.)
+* Remove "GetPlayers from service and API if not used".
+* Remove WeatherForecastController (Replace with Ping controller?)
+
+Improvements
+
+* Investigate if there is a better way to handle connection (or pooling) within the API service.
+* Metrics Scrapping?
+* Health Check?

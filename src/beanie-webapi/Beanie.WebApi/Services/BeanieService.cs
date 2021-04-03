@@ -45,7 +45,7 @@ namespace Beanie.WebApi.Services
 	                VALUES (@UserName, @GameId, @Scores, @TurnOrder);";
 
                 // Insert Players for Game
-                scoreboard.Players.ToList().ForEach(player =>
+                scoreboard.Players.ForEach(player =>
                 {
                     var parameters = new DynamicParameters();
                     parameters.Add("@UserName", player.Name);
@@ -57,11 +57,13 @@ namespace Beanie.WebApi.Services
                 });
 
                 transaction.Commit();
+                connection.Dispose();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 transaction.Rollback();
+                connection.Dispose();
                 throw ex;
             }
         }
@@ -104,16 +106,14 @@ namespace Beanie.WebApi.Services
             }
         }
 
-        public List<Player> GetPlayers()
+        public List<Player> GetPlayers() // TODO: Do I need this anymore?
         {
             using var connection = new NpgsqlConnection(_connectionString);
             connection.Open();
-            var transaction = connection.BeginTransaction();
 
             try
             {
-                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM player", transaction).ToList();
-                transaction.Commit();
+                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM player").ToList();
                 connection.Dispose();
 
                 var players = playerEntities.Select(player => new Player() { 
@@ -124,9 +124,42 @@ namespace Beanie.WebApi.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                connection.Dispose();
+                throw ex;
+            }
+        }
+
+        public void SetScores(ScoreBoard scoreboard)
+        {
+            using var connection = new NpgsqlConnection(_connectionString);
+            connection.Open();
+            var transaction = connection.BeginTransaction();
+
+            try
+            {
+                // Insert Players for Game
+                var sql = @"UPDATE public.player
+	                SET scores=@Scores
+                    WHERE username=@Username AND gameid=@GameId; ";
+
+                scoreboard.Players.ForEach(player =>
+                {
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@UserName", player.Name);
+                    parameters.Add("@GameId", scoreboard.GameId);
+                    parameters.Add("@Scores", JsonConvert.SerializeObject(player.Scores));
+
+                    var affectedRows = connection.Execute(sql: sql, param: parameters, transaction: transaction);
+                });
+
+                transaction.Commit();
+                connection.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
                 transaction.Rollback();
                 connection.Dispose();
-
                 throw ex;
             }
         }

@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { EventEmitter } from '@angular/core';
 import { ScoreBoard } from 'src/app/models/scoreboard.model';
 import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
-import { PlayerScore } from 'src/app/models/player-score.model';
 
 @Component({
   selector: 'app-controller',
@@ -66,7 +65,7 @@ export class ControllerComponent implements OnInit {
       this.manager.SetActiveRound(++this.currentRound);
       this.manager.SetLatestRound(++this.roundsPlayed);
     }
-    // Else return to the newest frame
+    // Else return to the latest frame
     else {
       this.currentRound = this.roundsPlayed;
       this.manager.SetActiveRound(this.roundsPlayed);

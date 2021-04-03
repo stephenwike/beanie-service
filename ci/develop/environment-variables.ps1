@@ -23,5 +23,5 @@ Set-BuildEnvironmentVariable BUILD_CONFIGURATION "Release"
 Set-BuildEnvironmentVariable DOCKER_REPO "stephenwike"
 Set-BuildEnvironmentVariable WEBAPI_DOCKER_IMAGE "beanie-webapi"
 Set-BuildEnvironmentVariable UI_DOCKER_IMAGE "beanie-ui"
+Set-BuildEnvironmentVariable MIGRATION_DOCKER_IMAGE "beanie-migration"
 Set-BuildEnvironmentVariable HELM_CHART_NAME "beanie"
-

@@ -6,6 +6,7 @@
 #Build Components
 . ./ci/build-webapi.ps1
 . ./ci/build-ui.ps1
+. ./ci/build-migration.ps1
 
 #Deploy Components
 . ./ci/develop/deploy-webapi.ps1

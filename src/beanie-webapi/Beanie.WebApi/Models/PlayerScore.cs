@@ -1,5 +1,8 @@
-﻿namespace Beanie.WebApi.Models
+﻿using System;
+
+namespace Beanie.WebApi.Models
 {
+    [Serializable]
     public class PlayerScore
     {
         public int Points { get; set; }
