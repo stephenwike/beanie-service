@@ -13,6 +13,7 @@
         <div fxLayout="row" fxShow="false" fxShow.gt-sm>
             <button mat-button routerLink="/scoreboard">Scoreboard</button>
             <button mat-button routerLink="/controller">Controller</button>
+            <button mat-button routerLink="/dashboard">Dashboard</button>
         </div>
         <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
          <mat-icon>menu</mat-icon>
@@ -31,7 +32,8 @@
       </mat-toolbar>
       <mat-menu x-position="before" #menu="matMenu">
         <button mat-menu-item routerLink="/kiosk">Kiosk</button>
-        <button mat-menu-item routerLink="/dashboard">Controller</button>
+        <button mat-menu-item routerLink="/controller">Controller</button>
+        <button mat-menu-item routerLink="/dashboard">Dashboard</button>
         <!--<button mat-menu-item>Help</button>-->
       </mat-menu>
   

@@ -8,12 +8,14 @@
 
 .container {
     margin: auto;
+    margin-top: 50px;
     border: 1px solid black;
     max-width: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 25px;
 }
 
 .input-username {

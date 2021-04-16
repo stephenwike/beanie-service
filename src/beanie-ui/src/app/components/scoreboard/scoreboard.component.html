@@ -1,7 +1,7 @@
 <h1>Beanie Scoreboard</h1>
 
 <div class="container">
-    <mat-grid-list *ngIf="scoreBoard && scoreBoard.players" cols="{{ scoreBoard.players.length + 2 }}" rowHeight="5:1">
+    <mat-grid-list *ngIf="scoreBoard && scoreBoard.players" cols="{{ scoreBoard.players.length + 2 }}" rowHeight="7:1">
 
         <!--HEADER-->
         <mat-grid-tile class="grid-tile">ROUND</mat-grid-tile>
@@ -11,7 +11,7 @@
         <!--SCORES-->
         <div *ngFor="let round of rounds; let i = index;">
             <mat-grid-tile class="grid-tile" [style.background]="(scoreBoard.activeRound == i) ? 'lightblue' : 'transparent'">{{ round }}</mat-grid-tile>
-            <mat-grid-tile class="grid-tile" [style.background]="(scoreBoard.activeRound == i) ? 'lightblue' : 'transparent'" *ngFor="let player of scoreBoard.players">{{ DisplayScore(player.scores[i]) }}</mat-grid-tile>
+            <mat-grid-tile class="grid-tile" [style.background]="(scoreBoard.activeRound == i) ? 'lightblue' : 'transparent'" *ngFor="let player of scoreBoard.players">{{ DisplayScore(player.scores, i) }}</mat-grid-tile>
             <mat-grid-tile class="grid-tile" [style.background]="(scoreBoard.activeRound == i) ? 'lightblue' : 'transparent'">{{ scoreBoard.players[i % scoreBoard.players.length].name }}</mat-grid-tile>
         </div>
     

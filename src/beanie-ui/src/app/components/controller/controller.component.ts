@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { ScoreBoard } from 'src/app/models/scoreboard.model';
 import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
@@ -14,12 +14,11 @@ export class ControllerComponent implements OnInit {
   @Input() scoreBoard: ScoreBoard;
   @Output() changeDetected: EventEmitter<any> = new EventEmitter<any>();
 
-  //playerArray: string[];
   roundWilds: string[] = ["Aces", "Twos", "Threes", "Fours", "Fives", "Sixes", "Sevens", "Eights", "Nines", "Tens", "Jacks", "Queens", "Kings"];
   scoreForm: FormGroup;
-  currentRound: number = 0;
-  roundsPlayed: number = 0;
-  errorMessage: string = "";//"There are errors: This is a very long error for testing the formatting of the error message on the page.";
+  activeRound: number = 0;
+  latestRound: number = 0;
+  errorMessage: string = "";
   playerNames: string[] = [];
 
   get players(): FormArray {
@@ -31,10 +30,17 @@ export class ControllerComponent implements OnInit {
     private manager: BeanieManagerService) { }
 
   ngOnInit(): void {  
+    if (!this.scoreBoard)
+    {
+      this.scoreBoard = this.manager.GetScoreBoard();
+    }
+
     this.scoreForm = this.fb.group({
       players: this.fb.array([])
     })
 
+    this.activeRound = this.manager.GetActiveRound();
+    this.latestRound = this.manager.GetLatestRound();
     this.setPlayers();
   }
 
@@ -53,7 +59,7 @@ export class ControllerComponent implements OnInit {
     this.manager.SetScores(this.players.value);
 
     // If the current round is index 12, there are no more rounds
-    if (this.currentRound === 12)
+    if (this.activeRound === 12)
     {
       // TODO:  Trigger end of game!
       return;
@@ -61,14 +67,14 @@ export class ControllerComponent implements OnInit {
 
     // If the current round is the latest round played (i.e. Not correcting an earlier score)
     // Increase the rounds played and current round counters.
-    if (this.currentRound === this.roundsPlayed) {
-      this.manager.SetActiveRound(++this.currentRound);
-      this.manager.SetLatestRound(++this.roundsPlayed);
+    if (this.activeRound === this.latestRound) {
+      this.manager.SetActiveRound(++this.activeRound);
+      this.manager.SetLatestRound(++this.latestRound);
     }
     // Else return to the latest frame
     else {
-      this.currentRound = this.roundsPlayed;
-      this.manager.SetActiveRound(this.roundsPlayed);
+      this.activeRound = this.latestRound;
+      this.manager.SetActiveRound(this.latestRound);
     }
 
     this.scoreForm.reset();
@@ -76,7 +82,7 @@ export class ControllerComponent implements OnInit {
   }
 
   Previous(): void {
-    this.manager.SetActiveRound(--this.currentRound);
+    this.manager.SetActiveRound(--this.activeRound);
     let roundScores = this.manager.GetRoundScores();
     console.log("Round SCORES");
     console.log(roundScores);
@@ -85,7 +91,7 @@ export class ControllerComponent implements OnInit {
   }
 
   Next(): void {
-    this.manager.SetActiveRound(++this.currentRound);
+    this.manager.SetActiveRound(++this.activeRound);
     let roundScores = this.manager.GetRoundScores();
     this.players.patchValue(roundScores);
     this.changeDetected.emit(null);

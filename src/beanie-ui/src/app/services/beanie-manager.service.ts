@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { PlayerScore } from '../models/player-score.model';
 import { Player } from '../models/player.model';
 import { ScoreBoard } from '../models/scoreboard.model';
@@ -28,8 +29,19 @@ export class BeanieManagerService {
     return this.localStorage.get(this.SCOREBOARD);
   }
 
-  GetScoreBoardById(id: string) {
-    this.service.GetScoreBoard(id);
+  GetScoreBoardById(id: string): Promise<boolean> {
+    return this.service.GetScoreBoard(id).toPromise().then(
+      (scoreboard) => { 
+        console.log("GetScoreBoardById: ");
+        console.log(scoreboard);
+        if (scoreboard != null)
+        {
+          this.localStorage.set(this.SCOREBOARD, scoreboard); 
+          return true;
+        }
+        return false;
+      }
+    );
   }
 
   SetScoreBoard(scoreboard: ScoreBoard) {
@@ -51,6 +63,22 @@ export class BeanieManagerService {
     console.log(scoreboard);
     this.SetScoreBoard(scoreboard);
     this.service.SetScores(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
+  }
+
+  GetLatestRound(): number {
+    let scoreboard: ScoreBoard = this.GetScoreBoard();
+    let latestround: number = scoreboard?.latestRound ? scoreboard.latestRound : 0;
+    console.log("Latest Round is:");
+    console.log(latestround);
+    return latestround;
+  }
+
+  GetActiveRound(): number {
+    let scoreboard: ScoreBoard = this.GetScoreBoard();
+    let activeround: number = scoreboard?.activeRound ? scoreboard.activeRound : 0;
+    console.log("Active Round is:");
+    console.log(activeround);
+    return activeround;
   }
 
   SetLatestRound(round: number) {

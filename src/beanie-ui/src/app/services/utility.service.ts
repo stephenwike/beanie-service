@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UtilityService {
-
+  
   constructor() { }
 
   Shuffle(array) {
@@ -24,5 +24,15 @@ export class UtilityService {
     }
   
     return array;
+  }
+
+  GenerateRandomGameId(): string {
+    var result           = [];
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < 6; i++ ) {
+      result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+    }
+    return result.join('');
   }
 }

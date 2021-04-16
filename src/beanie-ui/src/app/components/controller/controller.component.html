@@ -1,48 +1,50 @@
 <h1>Beanie Controller</h1>
 
-<div class="container" fxLayout="column" >
-    <div class="round-header" fxFlex>
-        <button mat-button (click)="Previous()" [disabled]="currentRound === 0" fxFlex="10">Previous</button>
-        <div fxFlex="80">
-            <h2>ROUND {{ currentRound + 1}}</h2>
-            <p>{{ roundWilds[currentRound] }} are wild</p> 
+<center>
+    <div class="container" fxLayout="column" fxLayoutAlign="space-around center">
+        <div class="round-header" fxFlex>
+            <button mat-button (click)="Previous()" [disabled]="activeRound === 0" fxFlex="10">Previous</button>
+            <div fxFlex="80">
+                <h2>ROUND {{ activeRound + 1}}</h2>
+                <p>{{ roundWilds[activeRound] }} are wild</p> 
+            </div>
+            <button mat-button (click)="Next()" [disabled]="activeRound === latestRound" fxFlex="10">Next</button> 
         </div>
-        <button mat-button (click)="Next()" [disabled]="currentRound === roundsPlayed" fxFlex="10">Next</button> 
-    </div>
+        
+        <form class="score-form" [formGroup]="scoreForm" fxLayout="column">
     
-    <form class="score-form" [formGroup]="scoreForm" fxLayout="column">
-
-        <div class="score-header" fxFlex>
-            <p fxFlex="33">Player</p>
-            <p fxFlex="33">Score</p>
-            <p fxFlex="33">Penatly?</p>
-        </div>
-
-        <div formArrayName="players" *ngFor="let player of players.controls; let i = index">
-
-            <div [formGroupName]="i">
-
-                <label fxFlex="33">{{ playerNames[i] }}</label>
-                <div fxFlex="33">
-                    <div class="score-input-container" fxFlex>
-                        <input formControlName="points" fxFlex="90" matInput autocomplete="off" class="player-score" type="number" min="0" />
-                        <button class="calculator-button">
-                            <mat-icon fxFlex="10" aria-hidden="false" aria-label="Score calculator icon" >calculate</mat-icon>
-                        </button>
+            <div class="score-header" fxFlex>
+                <p fxFlex="33">Player</p>
+                <p fxFlex="33">Score</p>
+                <p fxFlex="33">Penatly?</p>
+            </div>
+    
+            <div formArrayName="players" *ngFor="let player of players.controls; let i = index">
+    
+                <div [formGroupName]="i">
+    
+                    <label fxFlex="33">{{ playerNames[i] }}</label>
+                    <div fxFlex="33">
+                        <div class="score-input-container" fxFlex>
+                            <input formControlName="points" fxFlex="90" matInput autocomplete="off" class="player-score" type="number" min="0" />
+                            <button class="calculator-button">
+                                <mat-icon fxFlex="10" aria-hidden="false" aria-label="Score calculator icon" >calculate</mat-icon>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="penaltyCheckbox" fxFlex="33" fxLayoutAlign="center start">
-                    <mat-checkbox formControlName="penalty"></mat-checkbox>
-                </div>
-
-            </div>           
-        </div>
-
-    </form>
-
-    <p class="error-message" *ngIf="errorMessage">
-        {{ errorMessage }}
-    </p>
-
-    <button class="save-button" (click)="setScores()">SAVE SCORES</button>
-</div>
+                    <div class="penaltyCheckbox" fxFlex="33" fxLayoutAlign="center start">
+                        <mat-checkbox formControlName="penalty"></mat-checkbox>
+                    </div>
+    
+                </div>           
+            </div>
+    
+        </form>
+    
+        <p class="error-message" *ngIf="errorMessage">
+            {{ errorMessage }}
+        </p>
+    
+        <button class="save-button" (click)="setScores()">SAVE SCORES</button>
+    </div>
+</center>

@@ -1,6 +1,7 @@
 h1 {
-    margin: 25px;
+    margin: 50px;
     text-align: center;
+    font-weight: bold;
 }
 
 h2 {
@@ -16,10 +17,17 @@ label {
     text-align: center;
 }
 
-.container {
+.center-container {
     margin: auto;
-    width: 500px;
+    padding: auto;
+    align-content: center;
+    align-items: center;
+}
+
+.container {
+    margin: 50px;
     border: 1px solid black;
+    max-width: 600px;
 }
 
 .round-header {
@@ -36,6 +44,7 @@ label {
 
 .score-form {
     display: flex;
+    width: 100%;
     margin-bottom: 25px;
 }
 

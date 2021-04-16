@@ -30,6 +30,6 @@ export class BeanieService {
   }
 
   GetScoreBoard(id: string): Observable<ScoreBoard> {
-    return this.http.get<ScoreBoard>(this.baseUri + `/${id}`);
+    return this.http.get<ScoreBoard>(this.baseUri + `${id}`);
   }
 }

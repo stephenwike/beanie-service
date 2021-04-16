@@ -12,11 +12,10 @@ import { UtilityService } from 'src/app/services/utility.service';
 })
 export class CreateGameComponent implements OnInit {
 
-  playersForm: FormGroup;
-  gameId: string = "NJJKRS";
+  gameForm: FormGroup;
 
   get players(): FormArray {
-    return <FormArray>this.playersForm.get('players');
+    return <FormArray>this.gameForm.get('players');
   }
 
   constructor(
@@ -26,7 +25,8 @@ export class CreateGameComponent implements OnInit {
     private util: UtilityService) { }
 
   ngOnInit(): void {
-    this.playersForm = new FormGroup({
+    this.gameForm = this.fb.group({
+      gameId: this.util.GenerateRandomGameId(),
       players: this.fb.array([ this.BuildPlayer(), this.BuildPlayer(), this.BuildPlayer() ])
     });
   }
@@ -59,7 +59,7 @@ export class CreateGameComponent implements OnInit {
     }
     
     console.log(players);
-    this.manager.CreateNewScoreBoard(this.gameId, players);
+    this.manager.CreateNewScoreBoard(this.gameForm.get('gameId').value, players);
     this.route.navigate(['/dashboard']);
   }
 }

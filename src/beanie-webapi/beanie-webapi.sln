@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beanie.WebApi", "Beanie.WebApi\Beanie.WebApi.csproj", "{BB6A4A58-7CCF-4302-8525-CFF3ADD1376F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beanie.WebApi.Tests", "Beanie.WebApi.Tests\Beanie.WebApi.Tests.csproj", "{053332BD-4494-42A9-9937-ED88D46301C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beanie.WebApi.Tests", "Beanie.WebApi.Tests\Beanie.WebApi.Tests.csproj", "{053332BD-4494-42A9-9937-ED88D46301C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

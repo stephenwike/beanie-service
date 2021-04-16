@@ -76,6 +76,11 @@ namespace Beanie.WebApi.Services
             try
             {
                 var gameEntity = connection.Query<GameEntity>("SELECT * FROM public.game WHERE id = @Id", new { Id = id }).FirstOrDefault();
+                if (gameEntity == null)
+                {
+                    return null;
+                }
+                
                 var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM public.player WHERE gameid = @Id", new { Id = id }).ToList();
 
                 connection.Dispose();
@@ -149,8 +154,16 @@ namespace Beanie.WebApi.Services
                     parameters.Add("@GameId", scoreboard.GameId);
                     parameters.Add("@Scores", JsonConvert.SerializeObject(player.Scores));
 
-                    var affectedRows = connection.Execute(sql: sql, param: parameters, transaction: transaction);
+                    connection.Execute(sql: sql, param: parameters, transaction: transaction);
                 });
+
+                // Update latest round
+                sql = @"UPDATE public.game
+                    SET latestround=@LatestRound,
+                        activeround=@ActiveRound
+                    WHERE gameid=@GameId;";
+
+                connection.Execute(sql: sql, param: new { LatestRound = scoreboard.LatestRound, ActiveRound = scoreboard.ActiveRound, GameId = scoreboard.GameId }, transaction: transaction);
 
                 transaction.Commit();
                 connection.Dispose();

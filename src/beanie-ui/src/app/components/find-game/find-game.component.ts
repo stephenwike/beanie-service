@@ -11,6 +11,7 @@ import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
 export class FindGameComponent implements OnInit {
 
   findForm: FormGroup;
+  warning: string = "No Warning Yet"; 
 
   constructor(
     private fb: FormBuilder,
@@ -26,8 +27,14 @@ export class FindGameComponent implements OnInit {
   Find() {
     let id = this.findForm.get("id").value;
     if (id) {
-      this.manager.GetScoreBoardById(id);
-      this.route.navigate(['/dashboard']);
+      this.manager.GetScoreBoardById(id).then((successful) => {
+        if (successful) {
+          this.route.navigate(['/dashboard']);
+        }
+        else {
+          this.warning = "Could not find game with the provided ID."
+        }
+      }).catch(err => console.log(err));
     }
   }
 }
