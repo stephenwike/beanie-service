@@ -21,8 +21,11 @@ export class ScoreboardComponent implements OnInit, OnDestroy {
     private manager: BeanieManagerService) { }
 
   ngOnInit(): void {
-    this.refreshScoreboard();
-    this.refresh = setInterval(() => this.refreshScoreboard(), 5000);
+    this.scoreBoard = this.manager.GetScoreBoard();
+    if (this.scoreBoard)
+    {
+      this.refresh = setInterval(() => this.refreshScoreboard(), 5000);
+    }
   }
 
   ngOnDestroy() {
@@ -33,7 +36,11 @@ export class ScoreboardComponent implements OnInit, OnDestroy {
 
   refreshScoreboard() {
     console.log("Refreshing Scoreboard.");
-    this.scoreBoard = this.manager.GetScoreBoard();
+    this.manager.GetScoreBoardById(this.scoreBoard.gameId).then(success => {
+      if (success) {
+        this.scoreBoard = this.manager.GetScoreBoard();
+      }
+    });
   }
 
   DisplayScore(scores: PlayerScore[], index: number)

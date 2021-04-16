@@ -1,5 +1,4 @@
-<h1>Beanie Scoreboard</h1>
-
+<h1>Beanie Scoreboard <span *ngIf="scoreBoard">({{scoreBoard.gameId}})</span></h1>
 <div class="container">
     <mat-grid-list *ngIf="scoreBoard && scoreBoard.players" cols="{{ scoreBoard.players.length + 2 }}" rowHeight="7:1">
 
