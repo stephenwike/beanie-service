@@ -1,6 +1,6 @@
 <h1>Beanie Controller</h1>
 
-<center>
+<div fxLayout="row" fxLayoutAlign="space-around center">
     <div class="container" fxLayout="column" fxLayoutAlign="space-around center">
         <div class="round-header" fxFlex>
             <button mat-button (click)="Previous()" [disabled]="activeRound === 0" fxFlex="10">Previous</button>
@@ -47,4 +47,5 @@
     
         <button class="save-button" (click)="setScores()">SAVE SCORES</button>
     </div>
-</center>
+    
+</div>
