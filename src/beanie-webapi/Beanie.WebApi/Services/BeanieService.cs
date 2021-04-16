@@ -161,7 +161,7 @@ namespace Beanie.WebApi.Services
                 sql = @"UPDATE public.game
                     SET latestround=@LatestRound,
                         activeround=@ActiveRound
-                    WHERE gameid=@GameId;";
+                    WHERE id=@GameId;";
 
                 connection.Execute(sql: sql, param: new { LatestRound = scoreboard.LatestRound, ActiveRound = scoreboard.ActiveRound, GameId = scoreboard.GameId }, transaction: transaction);
 
