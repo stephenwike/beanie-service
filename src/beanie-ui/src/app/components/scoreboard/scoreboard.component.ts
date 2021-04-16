@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { PlayerScore } from 'src/app/models/player-score.model';
 import { ScoreBoard } from 'src/app/models/scoreboard.model';
 import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
@@ -8,9 +8,10 @@ import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
   templateUrl: './scoreboard.component.html',
   styleUrls: ['./scoreboard.component.scss']
 })
-export class ScoreboardComponent implements OnInit {
+export class ScoreboardComponent implements OnInit implements OnDestroy {
 
   @Input() scoreBoard: ScoreBoard;
+  refresh: NodeJS.Timeout;
 
   rounds: string[] = [
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"
@@ -20,14 +21,18 @@ export class ScoreboardComponent implements OnInit {
     private manager: BeanieManagerService) { }
 
   ngOnInit(): void {
-    if (!this.scoreBoard)
-    {
-      this.refreshScoreboard();
-      setInterval(() => this.refreshScoreboard(), 5000);
+    this.refreshScoreboard();
+    this.refresh = setInterval(() => this.refreshScoreboard(), 5000);
+  }
+
+  ngOnDestroy() {
+    if (this.refresh) {
+      clearInterval(this.refresh);
     }
   }
 
   refreshScoreboard() {
+    console.log("Refreshing Scoreboard.");
     this.scoreBoard = this.manager.GetScoreBoard();
   }
 
