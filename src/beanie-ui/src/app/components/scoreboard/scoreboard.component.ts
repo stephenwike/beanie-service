@@ -8,10 +8,10 @@ import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
   templateUrl: './scoreboard.component.html',
   styleUrls: ['./scoreboard.component.scss']
 })
-export class ScoreboardComponent implements OnInit implements OnDestroy {
+export class ScoreboardComponent implements OnInit, OnDestroy {
 
   @Input() scoreBoard: ScoreBoard;
-  refresh: NodeJS.Timeout;
+  refresh;
 
   rounds: string[] = [
     "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"
