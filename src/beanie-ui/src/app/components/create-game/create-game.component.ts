@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PlayerScore } from 'src/app/models/player-score.model';
 import { Player } from 'src/app/models/player.model';
 import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
+import { PlayerGeneratorService } from 'src/app/services/player-generator.service';
 import { UtilityService } from 'src/app/services/utility.service';
 
 @Component({
@@ -22,7 +24,8 @@ export class CreateGameComponent implements OnInit {
     private fb: FormBuilder, 
     private manager: BeanieManagerService, 
     private route: Router,
-    private util: UtilityService) { }
+    private util: UtilityService,
+    private playerGen: PlayerGeneratorService) { }
 
   ngOnInit(): void {
     this.gameForm = this.fb.group({
@@ -43,8 +46,9 @@ export class CreateGameComponent implements OnInit {
 
   StartGame(): void {
     let players = this.players.controls.map(x => {
-      let player = new Player()
-      player.name = x.value.username;
+      let player = this.playerGen.Build(x.value.username);
+      console.log("Player");
+      console.log(player);
       return player;
     });
 

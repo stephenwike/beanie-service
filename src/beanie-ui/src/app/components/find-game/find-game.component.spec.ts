@@ -1,4 +1,7 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { FindGameComponent } from './find-game.component';
 
@@ -8,7 +11,9 @@ describe('FindGameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FindGameComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ FindGameComponent ],
+      providers: [ FormBuilder, HttpClient, HttpHandler ]
     })
     .compileComponents();
   }));

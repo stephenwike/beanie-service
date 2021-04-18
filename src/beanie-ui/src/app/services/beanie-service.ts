@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ScoreBoard } from '../models/scoreboard.model';
-import { PlayerScore } from '../models/player-score.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +24,8 @@ export class BeanieService {
     return this.http.post(this.baseUri + "creategame", scoreboard, options);
   }
 
-  SetScores(scoreboard: ScoreBoard): Observable<any> {
+  SetScoreboard(scoreboard: ScoreBoard): Observable<any> {
+    console.log(scoreboard);
     return this.http.put(this.baseUri + `scores`, scoreboard);
   }
 

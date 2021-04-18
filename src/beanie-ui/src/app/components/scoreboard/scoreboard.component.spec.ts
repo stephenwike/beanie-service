@@ -1,3 +1,4 @@
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScoreboardComponent } from './scoreboard.component';
@@ -8,7 +9,8 @@ describe('ScoreboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScoreboardComponent ]
+      declarations: [ ScoreboardComponent ],
+      providers: [ HttpClient, HttpHandler ]
     })
     .compileComponents();
   }));

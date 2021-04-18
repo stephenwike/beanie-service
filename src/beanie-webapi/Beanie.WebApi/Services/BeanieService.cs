@@ -50,7 +50,7 @@ namespace Beanie.WebApi.Services
                     var parameters = new DynamicParameters();
                     parameters.Add("@UserName", player.Name);
                     parameters.Add("@GameId", scoreboard.GameId);
-                    parameters.Add("@Scores", "");
+                    parameters.Add("@Scores", JsonConvert.SerializeObject(player.Scores));
                     parameters.Add("@TurnOrder", player.TurnOrder);
 
                     var affectedRows = connection.Execute(sql: sql, param: parameters, transaction: transaction);

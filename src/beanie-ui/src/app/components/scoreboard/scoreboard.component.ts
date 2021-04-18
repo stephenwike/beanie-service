@@ -44,11 +44,12 @@ export class ScoreboardComponent implements OnInit, OnDestroy {
   }
 
   DisplayScore(scores: PlayerScore[], index: number)
-  {   
-    if (scores && scores.length > index && (scores[index]?.points || scores[index]?.points == 0)) {
+  {  
+    if (scores[index].saved)
+    {
       return scores[index].points + (scores[index]?.penalty ? 100 : 0);
-    }
-    else return null;
+    } 
+    return null;
   }
 
   Sum(scores: PlayerScore[]): number {

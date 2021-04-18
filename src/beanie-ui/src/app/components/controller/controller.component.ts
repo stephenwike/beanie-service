@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { ScoreBoard } from 'src/app/models/scoreboard.model';
 import { BeanieManagerService } from 'src/app/services/beanie-manager.service';
+import { PlayerScore } from 'src/app/models/player-score.model';
 
 @Component({
   selector: 'app-controller',
@@ -45,7 +46,7 @@ export class ControllerComponent implements OnInit {
   }
 
   private setPlayers(): void {
-    this.scoreBoard.players.forEach(x => {
+    this.scoreBoard?.players?.forEach(x => {
       this.playerNames.push(x.name);
 
       this.players.push(this.fb.group({
@@ -56,7 +57,17 @@ export class ControllerComponent implements OnInit {
   }
 
   setScores(): void {
-    this.manager.SetScores(this.players.value);
+    let players: PlayerScore[] = [];
+    console.log(this.players.value);
+    for (let i = 0; i < this.players.value.length; ++i)
+    {
+      let player = new PlayerScore();
+      player.penalty = this.players.value[i].penalty ? true : false;
+      player.points = this.players.value[i].points;
+      player.saved = true;
+      players.push(player);
+    };
+    this.manager.SetScores(players);
 
     // If the current round is index 12, there are no more rounds
     if (this.activeRound === 12)
@@ -75,8 +86,10 @@ export class ControllerComponent implements OnInit {
     else {
       this.activeRound = this.latestRound;
       this.manager.SetActiveRound(this.latestRound);
+      this.manager.SetLatestRound(this.latestRound);
     }
 
+    // Cleanup the form
     this.scoreForm.reset();
     this.changeDetected.emit(null);
   }

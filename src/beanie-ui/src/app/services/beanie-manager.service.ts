@@ -48,36 +48,25 @@ export class BeanieManagerService {
     this.localStorage.set(this.SCOREBOARD, scoreboard);
   }
 
-  SetScores(players: any) {
+  SetScores(playerScores: PlayerScore[]) {
     let scoreboard: ScoreBoard = this.GetScoreBoard();
-    for (let i = 0; i < players.length; ++i)
+    for (let i = 0; i < playerScores.length; ++i)
     {
-      let playerScore = new PlayerScore();
-      playerScore.points = players[i].points;
-      playerScore.penalty = players[i].penalty;
-      scoreboard.players[i].scores[scoreboard.activeRound] = playerScore;
-      console.log("Creating Player Score...");
-      console.log(playerScore);
+      scoreboard.players[i].scores[scoreboard.activeRound] = playerScores[i];
     }
-    console.log("SCOREBOARD");
-    console.log(scoreboard);
     this.SetScoreBoard(scoreboard);
-    this.service.SetScores(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
+    this.service.SetScoreboard(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
   }
 
   GetLatestRound(): number {
     let scoreboard: ScoreBoard = this.GetScoreBoard();
     let latestround: number = scoreboard?.latestRound ? scoreboard.latestRound : 0;
-    console.log("Latest Round is:");
-    console.log(latestround);
     return latestround;
   }
 
   GetActiveRound(): number {
     let scoreboard: ScoreBoard = this.GetScoreBoard();
     let activeround: number = scoreboard?.activeRound ? scoreboard.activeRound : 0;
-    console.log("Active Round is:");
-    console.log(activeround);
     return activeround;
   }
 
@@ -85,12 +74,14 @@ export class BeanieManagerService {
     let scoreboard: ScoreBoard = this.GetScoreBoard();
     scoreboard.latestRound = round;
     this.SetScoreBoard(scoreboard);
+    this.service.SetScoreboard(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
   }
 
   SetActiveRound(round: number) {
     let scoreboard: ScoreBoard = this.GetScoreBoard();
     scoreboard.activeRound = round;
     this.SetScoreBoard(scoreboard);
+    this.service.SetScoreboard(scoreboard).subscribe({next: () => {}, error: (error) => console.log(error)});
   }
 
   GetRoundScores(): PlayerScore[] {
@@ -99,8 +90,6 @@ export class BeanieManagerService {
     scoreboard.players.forEach(x => {
       playerScores.push(x.scores[scoreboard.activeRound]);
     });
-    console.log("PlayerScores");
-    console.log(playerScores);
     return playerScores;
   }
 }

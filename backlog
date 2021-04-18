@@ -6,6 +6,7 @@ Backlog
 * Remove "GetPlayers from service and API if not used".
 * Remove WeatherForecastController (Replace with Ping controller?)
 * Add pre-check to determine if game id already exists.
+* Add a logger service
 
 Improvements
 
