@@ -38,7 +38,7 @@ namespace Beanie.WebApi.Services
 
                 var affectedRows = connection.Execute(
                     sql: sql, 
-                    param: new { Id = scoreboard.GameId, ActiveRound = scoreboard.ActiveRound, LatestRound = scoreboard.LatestRound}, 
+                    param: new { Id = scoreboard.GameId, ActiveRound = scoreboard.ActiveRound, LatestRound = scoreboard.LatestRound }, 
                     transaction: transaction);
 
                 sql = @"INSERT INTO public.player(username, gameid, scores, turnorder)
@@ -75,13 +75,13 @@ namespace Beanie.WebApi.Services
 
             try
             {
-                var gameEntity = connection.Query<GameEntity>("SELECT * FROM public.game WHERE id = @Id", new { Id = id }).FirstOrDefault();
+                var gameEntity = connection.Query<GameEntity>("SELECT * FROM public.game WHERE id = @Id;", new { Id = id }).FirstOrDefault();
                 if (gameEntity == null)
                 {
                     return null;
                 }
                 
-                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM public.player WHERE gameid = @Id", new { Id = id }).ToList();
+                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM public.player WHERE gameid = @Id, ORDER BY turnorder ASC;", new { Id = id }).ToList();
 
                 connection.Dispose();
 
