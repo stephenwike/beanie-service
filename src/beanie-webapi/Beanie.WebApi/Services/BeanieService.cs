@@ -81,7 +81,7 @@ namespace Beanie.WebApi.Services
                     return null;
                 }
                 
-                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM public.player WHERE gameid = @Id, ORDER BY turnorder ASC;", new { Id = id }).ToList();
+                var playerEntities = connection.Query<PlayerEntity>("SELECT * FROM public.player WHERE gameid = @Id ORDER BY turnorder ASC;", new { Id = id }).ToList();
 
                 connection.Dispose();
 
